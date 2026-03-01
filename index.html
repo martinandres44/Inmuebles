@@ -4,468 +4,177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RentaCRM — Panel Administrativo</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+<title>RentaCRM</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bd:#080d1a;--bb:#0f172a;--bc:#1a2338;--be:#1e293b;--br:#253349;--bl:#334155;--t1:#f1f5f9;--t2:#94a3b8;--t3:#64748b;--t4:#475569;--ac:#8b5cf6;--al:#a78bfa;--ag:rgba(139,92,246,.15);--gn:#22c55e;--gg:rgba(34,197,94,.12);--rd:#ef4444;--rg:rgba(239,68,68,.12);--yl:#eab308;--yg:rgba(234,179,8,.12);--cy:#06b6d4}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bb);color:var(--t1);display:flex;min-height:100vh;overflow:hidden}
-::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:var(--br);border-radius:3px}
-#sidebar{width:230px;background:var(--bd);border-right:1px solid var(--br);display:flex;flex-direction:column;flex-shrink:0;height:100vh;overflow-y:auto}
-.slogo{padding:20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--br)}
-.slogo .ico{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 4px 12px rgba(99,102,241,.35)}
-.slogo span{font-size:18px;font-weight:800;color:var(--al)}
-.nhdr{padding:18px 20px 6px;font-size:10px;font-weight:700;letter-spacing:2px;color:var(--t4);text-transform:uppercase}
-.nit{width:100%;display:flex;align-items:center;gap:10px;padding:10px 20px;border:none;cursor:pointer;font-size:14px;font-family:inherit;font-weight:500;color:var(--t3);background:transparent;border-left:3px solid transparent;transition:all .15s}
-.nit:hover{color:var(--t2);background:rgba(139,92,246,.06)}
-.nit.on{color:var(--t1);font-weight:700;background:var(--ag);border-left-color:var(--ac)}
-.nit .ni{font-size:16px;width:22px;text-align:center}
-.nbdg{margin-left:auto;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;color:#fff}
-.nbdg.p{background:var(--ac)}.nbdg.r{background:var(--rd)}
-.sfoot{margin-top:auto;padding:14px 20px;border-top:1px solid var(--br)}
-.syncs{text-align:center;padding:7px;font-size:11px;font-weight:600;margin-bottom:8px;border-radius:6px}
-.syn-ok{color:var(--gn);background:var(--gg)}.syn-off{color:var(--rd);background:var(--rg)}.syn-sav{color:var(--yl);background:var(--yg)}
-.brst{width:100%;padding:8px;font-size:12px;font-weight:600;font-family:inherit;background:var(--rg);color:var(--rd);border:1px solid rgba(239,68,68,.2);border-radius:8px;cursor:pointer}
-#main{flex:1;padding:22px 34px 40px;overflow-y:auto;height:100vh}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-.top h2{font-size:22px;font-weight:800}
-.topm{display:flex;align-items:center;gap:16px;font-size:13px}
-.hero{background:linear-gradient(135deg,var(--bc),var(--bb));border-radius:16px;padding:28px;margin-bottom:24px;border:1px solid var(--br);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(139,92,246,.08),transparent 70%);pointer-events:none}
-.hlbl{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--t3);text-transform:uppercase;margin-bottom:8px}
-.hamt{font-size:42px;font-weight:800;color:var(--gn);margin-bottom:6px;line-height:1.1}
-.hsub{color:var(--t2);font-size:14px;margin-bottom:16px}
-.hpills{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.pill{border-radius:10px;padding:10px 18px}
-.plg{background:var(--gg);border:1px solid rgba(34,197,94,.3)}
-.plp{background:var(--ag);border:1px solid rgba(139,92,246,.3)}
-.plbl{font-size:10px;font-weight:700;letter-spacing:1px}
-.plg .plbl,.plg .pval{color:var(--gn)}.plp .plbl,.plp .pval{color:var(--al)}
-.pval{font-size:22px;font-weight:800}.pval span{font-size:13px;font-weight:400}
-.hfoot{font-size:13px;color:var(--t3)}
-.stitle{font-size:16px;font-weight:700;color:var(--t1);margin-bottom:14px}
-.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
-.ccard{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 14px;border-radius:12px;border:1.5px solid;text-align:center}
-.ccard .dot{width:40px;height:40px;border-radius:50%}
-.ccard .ct{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--t2);text-transform:uppercase}
-.ccard .cv{font-size:16px;font-weight:800}.ccard .cd{font-size:12px;color:var(--t3)}.ccard .cs{font-size:10px;color:var(--t4)}
-.ccard.grn{border-color:var(--gn);background:var(--gg)}.ccard.grn .dot{background:var(--gn);box-shadow:0 0 16px rgba(34,197,94,.4)}.ccard.grn .cv{color:var(--gn)}
-.ccard.yel{border-color:var(--yl);background:var(--yg)}.ccard.yel .dot{background:var(--yl);box-shadow:0 0 16px rgba(234,179,8,.4)}.ccard.yel .cv{color:var(--yl)}
-.ccard.red{border-color:var(--rd);background:var(--rg)}.ccard.red .dot{background:var(--rd);box-shadow:0 0 16px rgba(239,68,68,.4)}.ccard.red .cv{color:var(--rd)}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:1100px){.split{grid-template-columns:1fr}#sidebar{display:none}#main{padding:16px}}
-.card{background:var(--be);border-radius:14px;border:1px solid var(--bl);overflow:hidden}
-.cardb{padding:20px}
+body{font-family:'DM Sans',sans-serif;background:#0f172a;color:#f1f5f9;display:flex;min-height:100vh}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:#253349;border-radius:3px}
+#sb{width:230px;background:#080d1a;border-right:1px solid #253349;display:flex;flex-direction:column;flex-shrink:0;height:100vh;overflow-y:auto}
+.logo{padding:20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #253349}
+.logo b{font-size:18px;color:#a78bfa}
+.logo i{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:17px;font-style:normal;box-shadow:0 4px 12px rgba(99,102,241,.35)}
+.nh{padding:18px 20px 6px;font-size:10px;font-weight:700;letter-spacing:2px;color:#475569;text-transform:uppercase}
+.ni{width:100%;display:flex;align-items:center;gap:10px;padding:10px 20px;border:none;cursor:pointer;font-size:14px;font-family:inherit;font-weight:500;color:#64748b;background:0 0;border-left:3px solid transparent;transition:.15s}
+.ni:hover{color:#94a3b8;background:rgba(139,92,246,.06)}
+.ni.on{color:#f1f5f9;font-weight:700;background:rgba(139,92,246,.15);border-left-color:#8b5cf6}
+.ni em{font-size:16px;width:22px;text-align:center;font-style:normal}
+.nb{margin-left:auto;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;color:#fff}
+.nb.p{background:#8b5cf6}.nb.r{background:#ef4444}
+.sf{margin-top:auto;padding:14px 20px;border-top:1px solid #253349}
+.sf button{width:100%;padding:8px;font-size:12px;font-weight:600;font-family:inherit;border-radius:8px;cursor:pointer;margin-bottom:6px;border:1px solid}
+#mn{flex:1;padding:22px 34px 40px;overflow-y:auto;height:100vh}
+.tp{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.tp h2{font-size:22px;font-weight:800}
+.hero{background:linear-gradient(135deg,#1a2338,#0f172a);border-radius:16px;padding:28px;margin-bottom:24px;border:1px solid #253349}
+.hl{font-size:11px;font-weight:700;letter-spacing:2px;color:#64748b;text-transform:uppercase;margin-bottom:8px}
+.ha{font-size:42px;font-weight:800;color:#22c55e;margin-bottom:6px;line-height:1.1}
+.hs{color:#94a3b8;font-size:14px;margin-bottom:16px}
+.hp{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.pl{border-radius:10px;padding:10px 18px}
+.plg{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)}
+.plp{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3)}
+.plb{font-size:10px;font-weight:700;letter-spacing:1px}
+.plg .plb,.plg .plv{color:#22c55e}.plp .plb,.plp .plv{color:#a78bfa}
+.plv{font-size:22px;font-weight:800}.plv span{font-size:13px;font-weight:400}
+.hf{font-size:13px;color:#64748b}
+.st{font-size:16px;font-weight:700;margin-bottom:14px}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.cc{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 14px;border-radius:12px;border:1.5px solid;text-align:center}
+.cc .dt{width:40px;height:40px;border-radius:50%}
+.cc .ct{font-size:11px;font-weight:700;letter-spacing:1.5px;color:#94a3b8;text-transform:uppercase}
+.cc .cv{font-size:16px;font-weight:800}.cc .cd{font-size:12px;color:#64748b}.cc .cx{font-size:10px;color:#475569}
+.cc.grn{border-color:#22c55e;background:rgba(34,197,94,.12)}.cc.grn .dt{background:#22c55e;box-shadow:0 0 16px rgba(34,197,94,.4)}.cc.grn .cv{color:#22c55e}
+.cc.yel{border-color:#eab308;background:rgba(234,179,8,.12)}.cc.yel .dt{background:#eab308;box-shadow:0 0 16px rgba(234,179,8,.4)}.cc.yel .cv{color:#eab308}
+.cc.red{border-color:#ef4444;background:rgba(239,68,68,.12)}.cc.red .dt{background:#ef4444;box-shadow:0 0 16px rgba(239,68,68,.4)}.cc.red .cv{color:#ef4444}
+.sp{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:1100px){.sp{grid-template-columns:1fr}#sb{display:none}#mn{padding:16px}}
+.cd2{background:#1e293b;border-radius:14px;border:1px solid #334155;overflow:hidden}
+.cd2b{padding:20px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-thead tr{background:var(--bb)}
-th{padding:10px 14px;color:var(--t3);font-weight:700;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px}
-td{padding:10px 14px;color:var(--t1);border-top:1px solid var(--bb)}
+thead tr{background:#0f172a}
+th{padding:10px 14px;color:#64748b;font-weight:700;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+td{padding:10px 14px;border-top:1px solid #0f172a}
 tr:hover td{background:rgba(139,92,246,.04)}
-.bdg{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700}
-.bg{color:var(--gn);background:var(--gg)}.brr{color:var(--rd);background:var(--rg)}.by{color:var(--yl);background:var(--yg)}.bp{color:var(--ac);background:var(--ag)}.bm{color:var(--t3);background:rgba(100,116,139,.12)}
-.ow{background:var(--be);border-radius:12px;padding:14px 18px;border:1px solid var(--bl);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;transition:border-color .15s}
-.ow:hover{border-color:var(--ac)}
+.bg{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700}
+.bgn{color:#22c55e;background:rgba(34,197,94,.12)}.brd{color:#ef4444;background:rgba(239,68,68,.12)}.byl{color:#eab308;background:rgba(234,179,8,.12)}.bpr{color:#8b5cf6;background:rgba(139,92,246,.15)}.bgr{color:#64748b;background:rgba(100,116,139,.12)}
+.ow{background:#1e293b;border-radius:12px;padding:14px 18px;border:1px solid #334155;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ow:hover{border-color:#8b5cf6}
 .owl{display:flex;align-items:center;gap:14px}
 .av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px}
-.own{color:var(--t1);font-weight:600;font-size:14px}
-.owtags{display:flex;gap:8px;margin-top:4px}
-.owtag{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700}
-.owtag.mor{background:var(--yg);color:var(--yl)}.owtag.que{background:var(--rg);color:var(--rd)}
-.owr{display:flex;align-items:center;gap:8px}
-.owr .ml{color:var(--t2);font-size:12px}.owr .me{font-size:20px}.owr .mn{color:var(--t1);font-weight:700}
+.owt{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700;margin-right:4px}
 .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .sh h3{font-size:18px;font-weight:700}
-.btn{padding:10px 22px;border:none;border-radius:8px;font-weight:700;font-family:inherit;font-size:14px;cursor:pointer;transition:all .15s}
-.btn1{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.3)}
-.btn1:hover{box-shadow:0 6px 18px rgba(99,102,241,.45);transform:translateY(-1px)}
-.btn2{background:var(--bl);color:var(--t1)}
-.bti{background:none;border:none;cursor:pointer;font-size:16px;padding:4px 8px;transition:transform .1s}.bti:hover{transform:scale(1.15)}
-.btnco{background:var(--gn);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}
+.bt{padding:10px 22px;border:none;border-radius:8px;font-weight:700;font-family:inherit;font-size:14px;cursor:pointer}
+.bt1{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.3)}
+.bt2{background:#334155;color:#f1f5f9}
+.bti{background:0 0;border:none;cursor:pointer;font-size:16px;padding:4px 8px}
+.btc{background:#22c55e;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}
 .dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px}
-.dc{background:var(--be);border-radius:14px;padding:20px;border:1px solid var(--bl);transition:border-color .15s}
-.dc:hover{border-color:var(--ac)}
-.dc .di{font-size:24px;margin-bottom:8px}.dc .dl{font-size:11px;color:var(--t3);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}.dc .dv{font-size:26px;font-weight:800}
-.lr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--bb);font-size:13px}.lr:last-child{border-bottom:none}
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;animation:fi .15s}
-@keyframes fi{from{opacity:0}to{opacity:1}}
-.mbox{background:var(--be);border-radius:16px;padding:28px;width:520px;max-width:92vw;max-height:85vh;overflow-y:auto;border:1px solid var(--bl);box-shadow:0 25px 50px rgba(0,0,0,.5);animation:su .2s}
-@keyframes su{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.mhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.mhdr h3{font-size:18px;font-weight:700}
-.mclose{background:none;border:none;color:var(--t2);font-size:22px;cursor:pointer;padding:4px 8px}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dc{background:#1e293b;border-radius:14px;padding:20px;border:1px solid #334155}
+.dc:hover{border-color:#8b5cf6}
+.dc .di{font-size:24px;margin-bottom:8px}.dc .dl{font-size:11px;color:#64748b;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}.dc .dv{font-size:26px;font-weight:800}
+.lr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #0f172a;font-size:13px}.lr:last-child{border-bottom:none}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center}
+.mb{background:#1e293b;border-radius:16px;padding:28px;width:520px;max-width:92vw;max-height:85vh;overflow-y:auto;border:1px solid #334155;box-shadow:0 25px 50px rgba(0,0,0,.5)}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.mh h3{font-size:18px;font-weight:700}
+.mx{background:0 0;border:none;color:#94a3b8;font-size:22px;cursor:pointer;padding:4px 8px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .ff{margin-bottom:14px}
-.ff label{display:block;color:var(--t2);font-size:12px;font-weight:600;margin-bottom:6px;letter-spacing:.5px}
-.ff input,.ff select,.ff textarea{width:100%;padding:10px 14px;background:var(--bb);border:1px solid var(--bl);border-radius:8px;color:var(--t1);font-size:14px;font-family:inherit;outline:none;transition:border-color .15s}
-.ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--ac)}
+.ff label{display:block;color:#94a3b8;font-size:12px;font-weight:600;margin-bottom:6px}
+.ff input,.ff select,.ff textarea{width:100%;padding:10px 14px;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#f1f5f9;font-size:14px;font-family:inherit;outline:0}
+.ff input:focus,.ff select:focus,.ff textarea:focus{border-color:#8b5cf6}
 .ff textarea{min-height:70px;resize:vertical}
-.ff input[type=range]{padding:0;background:transparent;border:none;accent-color:var(--ac)}
-.factions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
-.rlbl{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-top:4px}
-.empty{padding:28px;text-align:center;color:var(--t3);font-size:14px}
-.loading{display:flex;align-items:center;justify-content:center;height:60vh;flex-direction:column;gap:16px}
-.spinner{width:40px;height:40px;border:3px solid var(--br);border-top-color:var(--ac);border-radius:50%;animation:sp .8s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
+.ff input[type=range]{padding:0;background:0 0;border:none;accent-color:#8b5cf6}
+.fa{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.rl{display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:4px}
+.em{padding:28px;text-align:center;color:#64748b;font-size:14px}
 </style>
 </head>
 <body>
-<aside id="sidebar">
-  <div class="slogo"><div class="ico">🏠</div><span>RentaCRM</span></div>
-  <nav id="nav"></nav>
-  <div class="sfoot">
-    <div id="syncSt" class="syncs syn-ok">🟢 Datos guardados</div>
-    <button class="brst" onclick="exportData()" style="background:var(--ag);color:var(--ac);border-color:rgba(139,92,246,.2);margin-bottom:6px">📤 Exportar datos</button>
-    <button class="brst" onclick="importData()" style="background:var(--gg);color:var(--gn);border-color:rgba(34,197,94,.2);margin-bottom:6px">📥 Importar datos</button>
-    <button class="brst" onclick="resetData()">🔄 Resetear datos demo</button>
-  </div>
+<aside id="sb">
+<div class="logo"><i>&#127968;</i><b>RentaCRM</b></div>
+<nav id="nv"></nav>
+<div class="sf">
+<div id="ss" style="text-align:center;padding:7px;font-size:11px;font-weight:600;border-radius:6px;color:#22c55e;background:rgba(34,197,94,.12);margin-bottom:8px">&#128994; Datos guardados</div>
+<button style="background:rgba(139,92,246,.15);color:#8b5cf6;border-color:rgba(139,92,246,.2)" onclick="exportD()">&#128228; Exportar datos</button>
+<button style="background:rgba(34,197,94,.12);color:#22c55e;border-color:rgba(34,197,94,.2)" onclick="importD()">&#128229; Importar datos</button>
+<button style="background:rgba(239,68,68,.12);color:#ef4444;border-color:rgba(239,68,68,.2)" onclick="resetD()">&#128260; Resetear demo</button>
+</div>
 </aside>
-<main id="main">
-  <div class="top"><h2>⚡ Panel Administrativo</h2><div class="topm"><span style="color:var(--gn);font-weight:700">✕ Online</span><span style="color:var(--t3)" id="topDate"></span></div></div>
-  <div id="content"></div>
+<main id="mn">
+<div class="tp"><h2>&#9889; Panel Administrativo</h2><div style="display:flex;align-items:center;gap:16px;font-size:13px"><span style="color:#22c55e;font-weight:700">&#10005; Online</span><span style="color:#64748b" id="dt"></span></div></div>
+<div id="ct"></div>
 </main>
-<div id="modalRoot"></div>
+<div id="mr"></div>
 <script>
-// ===================== LOCAL STORAGE =====================
-var STORAGE_KEY = 'rentacrm-data';
+var SK="rentacrm-data";
+var SEED={properties:[{id:"p1",name:"Depto 2 amb Centro",type:"Departamento",address:"Av. Rivadavia 1234, CABA",rooms:2,available:false,depositAmount:200000},{id:"p2",name:"Casa 3 dorm Guadalupe",type:"Casa",address:"Calle San Martin 567, Guadalupe",rooms:3,available:false,depositAmount:400000},{id:"p3",name:"PH reciclado Barrio Sur",type:"PH",address:"Pasaje Los Andes 89, Barrio Sur",rooms:2,available:true,depositAmount:280000},{id:"p4",name:"Monoambiente Microcentro",type:"Departamento",address:"Lavalle 890, CABA",rooms:1,available:true,depositAmount:150000},{id:"p5",name:"Depto 3 amb Palermo",type:"Departamento",address:"Honduras 4200, CABA",rooms:3,available:false,depositAmount:450000},{id:"p6",name:"Casa 4 dorm Caballito",type:"Casa",address:"Av. Pedro Goyena 1100, CABA",rooms:4,available:true,depositAmount:500000}],tenants:[{id:"t1",name:"Martin Aguirre",phone:"11-2345-6789",email:"martin.a@email.com",dni:"30.456.789"},{id:"t2",name:"Luciana Mendez",phone:"11-3456-7890",email:"luciana.m@email.com",dni:"28.567.890"},{id:"t3",name:"Familia Dominguez",phone:"11-4567-8901",email:"dominguez@email.com",dni:"35.678.901"},{id:"t4",name:"Carlos Pereyra",phone:"11-5678-9012",email:"carlos.p@email.com",dni:"32.789.012"}],owners:[{id:"o1",name:"Ricardo Fernandez",phone:"11-1111-2222",email:"ricardo.f@email.com",mood:3},{id:"o2",name:"Claudia Rossi de Martinez",phone:"11-2222-3333",email:"claudia.r@email.com",mood:3},{id:"o3",name:"Inversiones del Litoral S.R.L.",phone:"11-3333-4444",email:"info@invlitoral.com",mood:3},{id:"o4",name:"Marta Elena Luciano",phone:"11-4444-5555",email:"marta.l@email.com",mood:3}],contracts:[{id:"c1",propertyId:"p1",tenantId:"t1",ownerId:"o1",rent:420000,commission:10,startDate:"2024-06-01",endDate:"2026-06-01",active:true},{id:"c2",propertyId:"p2",tenantId:"t2",ownerId:"o2",rent:680000,commission:4,startDate:"2024-09-01",endDate:"2026-09-01",active:true},{id:"c3",propertyId:"p5",tenantId:"t4",ownerId:"o3",rent:550000,commission:8,startDate:"2025-01-01",endDate:"2027-01-01",active:true},{id:"c4",propertyId:"p3",tenantId:"t3",ownerId:"o4",rent:480000,commission:0,startDate:"2024-03-01",endDate:"2025-03-01",active:false}],payments:[{id:"pay1",contractId:"c1",month:"2026-02",amount:420000,paid:true,paidDate:"2026-02-05"},{id:"pay2",contractId:"c1",month:"2026-01",amount:420000,paid:true,paidDate:"2026-01-07"},{id:"pay3",contractId:"c2",month:"2026-02",amount:680000,paid:true,paidDate:"2026-02-01"},{id:"pay4",contractId:"c2",month:"2026-01",amount:680000,paid:true,paidDate:"2026-01-03"},{id:"pay5",contractId:"c3",month:"2026-02",amount:550000,paid:false,paidDate:null},{id:"pay6",contractId:"c3",month:"2026-01",amount:550000,paid:true,paidDate:"2026-01-10"},{id:"pay7",contractId:"c1",month:"2025-12",amount:400000,paid:false,paidDate:null}],complaints:[{id:"q1",propertyId:"p2",tenantId:"t2",ownerId:"o2",subject:"Humedad en bano",status:"abierta",date:"2026-02-10",description:"Filtracion en el techo del bano"},{id:"q2",propertyId:"p5",tenantId:"t4",ownerId:"o3",subject:"Calefaccion rota",status:"abierta",date:"2026-02-15",description:"El calefactor central no enciende"},{id:"q3",propertyId:"p1",tenantId:"t1",ownerId:"o1",subject:"Portero electrico",status:"abierta",date:"2026-02-20",description:"No funciona el portero electrico"},{id:"q4",propertyId:"p3",tenantId:"t3",ownerId:"o4",subject:"Cano roto cocina",status:"abierta",date:"2026-01-28",description:"Perdida de agua en cocina"}]};
+var D,sec="panel";
+try{var r=localStorage.getItem(SK);D=r?JSON.parse(r):null}catch(e){}
+if(!D||!D.properties)D=JSON.parse(JSON.stringify(SEED));
+try{localStorage.setItem(SK,JSON.stringify(D))}catch(e){}
+function sv(){try{localStorage.setItem(SK,JSON.stringify(D))}catch(e){}}
+function resetD(){if(confirm("Resetear todos los datos?")){D=JSON.parse(JSON.stringify(SEED));sv();R()}}
+function exportD(){var b=new Blob([JSON.stringify(D,null,2)],{type:"application/json"});var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="rentacrm-backup.json";a.click()}
+function importD(){var inp=document.createElement("input");inp.type="file";inp.accept=".json";inp.onchange=function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(ev){try{var d=JSON.parse(ev.target.result);if(d.properties&&d.tenants){D=d;sv();R();alert("Datos importados!")}else{alert("Archivo invalido")}}catch(e){alert("Error")}};rd.readAsText(f)};inp.click()}
+function fmt(n){return"$ "+Number(n).toLocaleString("es-AR")}
+function uid(){return"x"+Date.now()+Math.random().toString(36).slice(2,6)}
+function gP(id){for(var i=0;i<D.properties.length;i++)if(D.properties[i].id===id)return D.properties[i];return{}}
+function gT(id){for(var i=0;i<D.tenants.length;i++)if(D.tenants[i].id===id)return D.tenants[i];return{}}
+function gO(id){for(var i=0;i<D.owners.length;i++)if(D.owners[i].id===id)return D.owners[i];return{}}
+function gC(id){for(var i=0;i<D.contracts.length;i++)if(D.contracts[i].id===id)return D.contracts[i];return{}}
+function E(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function MJ(m){var e={1:"&#128545;",2:"&#128543;",3:"&#128528;",4:"&#128578;",5:"&#128516;"};return e[m]||e[3]}
+function AV(n){return"hsl("+(n||"").length*37%360+",45%,40%)"}
+function IN(n){return(n||"").split(" ").map(function(w){return w[0]}).join("").slice(0,2).toUpperCase()}
+function TD(){var d=new Date(),ds=["domingo","lunes","martes","miercoles","jueves","viernes","sabado"],ms=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];return ds[d.getDay()]+", "+d.getDate()+" de "+ms[d.getMonth()]}
+function ST(){var a=[],tr=0,td=0,mc=0,up=[],oc=0,am=0;for(var i=0;i<D.contracts.length;i++){if(D.contracts[i].active)a.push(D.contracts[i])}for(var i=0;i<a.length;i++)tr+=a[i].rent;for(var i=0;i<D.properties.length;i++)td+=(D.properties[i].depositAmount||0);for(var i=0;i<a.length;i++)mc+=a[i].rent*a[i].commission/100;for(var i=0;i<D.payments.length;i++)if(!D.payments[i].paid)up.push(D.payments[i]);var uci={};for(var i=0;i<up.length;i++)uci[up[i].contractId]=1;var mC=0;for(var k in uci)for(var i=0;i<a.length;i++)if(a[i].id===k)mC++;var mor=a.length>0?mC/a.length:0;var avC=0;for(var i=0;i<D.properties.length;i++)if(D.properties[i].available)avC++;var avP=D.properties.length>0?avC/D.properties.length*100:0;for(var i=0;i<D.complaints.length;i++)if(D.complaints[i].status==="abierta")oc++;for(var i=0;i<D.owners.length;i++)am+=(D.owners[i].mood||3);am=D.owners.length>0?am/D.owners.length:3;return{tm:tr*2+td,tr:tr,td:td,mc:mc,mor:mor,avC:avC,avP:avP,oc:oc,am:am,a:a,up:up}}
+function addI(c,o){o.id=uid();D[c].push(o);sv();CM();R()}
+function updI(c,id,u){for(var i=0;i<D[c].length;i++)if(D[c][i].id===id){for(var k in u)D[c][i][k]=u[k];break}sv();CM();R()}
+function delI(c,id){if(!confirm("Eliminar?"))return;D[c]=D[c].filter(function(x){return x.id!==id});sv();R()}
+function MP(id){for(var i=0;i<D.payments.length;i++)if(D.payments[i].id===id){D.payments[i].paid=true;D.payments[i].paidDate=new Date().toISOString().split("T")[0]}sv();R()}
+function OM(t,h){document.getElementById("mr").innerHTML="<div class=\"mo\" onclick=\"CM()\"><div class=\"mb\" onclick=\"event.stopPropagation()\"><div class=\"mh\"><h3>"+t+"</h3><button class=\"mx\" onclick=\"CM()\">&#10005;</button></div>"+h+"</div></div>"}
+function CM(){document.getElementById("mr").innerHTML=""}
+var NV=[{h:"ADMIN"},{k:"panel",i:"&#9889;",l:"Panel Admin"},{h:"GENERAL"},{k:"dashboard",i:"&#128202;",l:"Dashboard"},{h:"PROPIEDADES"},{k:"properties",i:"&#127968;",l:"Propiedades"},{k:"owners",i:"&#128100;",l:"Propietarios"},{h:"GESTION"},{k:"tenants",i:"&#128273;",l:"Inquilinos"},{k:"contracts",i:"&#128221;",l:"Contratos"},{k:"payments",i:"&#128176;",l:"Cobranzas"},{k:"complaints",i:"&#128227;",l:"Quejas"}];
+function RN(){var oc=0;for(var i=0;i<D.complaints.length;i++)if(D.complaints[i].status==="abierta")oc++;var h="";for(var j=0;j<NV.length;j++){var n=NV[j];if(n.h){h+="<div class=\"nh\">"+n.h+"</div>";continue}var b="";if(n.k==="complaints"&&oc>0)b="<span class=\"nb r\">"+oc+"</span>";else if(n.k==="tenants"&&D.tenants.length>0)b="<span class=\"nb p\">"+D.tenants.length+"</span>";h+="<button class=\"ni"+(sec===n.k?" on":"")+"\" onclick=\"sec='"+n.k+"';R()\"><em>"+n.i+"</em>"+n.l+b+"</button>"}document.getElementById("nv").innerHTML=h}
 
-function loadData() {
-try {
-var raw = localStorage.getItem(STORAGE_KEY);
-if (raw) return JSON.parse(raw);
-} catch(e) {}
-return null;
-}
+function PF(it){var i=it||{name:””,type:“Departamento”,address:””,rooms:1,available:true,depositAmount:0};var eid=it?i.id:””;return “<div class="ff"><label>Nombre</label><input id="fn" value="”+E(i.name)+”"></div><div class="fr"><div class="ff"><label>Tipo</label><select id="ft"><option”+(i.type===“Departamento”?” selected”:””)+”>Departamento</option><option”+(i.type===“Casa”?” selected”:””)+”>Casa</option><option”+(i.type===“PH”?” selected”:””)+”>PH</option><option”+(i.type===“Local”?” selected”:””)+”>Local</option><option”+(i.type===“Oficina”?” selected”:””)+”>Oficina</option></select></div><div class="ff"><label>Ambientes</label><input type="number" id="fr2" value="”+i.rooms+”"></div></div><div class="ff"><label>Direccion</label><input id="fa2" value="”+E(i.address)+”"></div><div class="fr"><div class="ff"><label>Deposito ($)</label><input type="number" id="fd" value="”+i.depositAmount+”"></div><div class="ff"><label>Disponible</label><select id="fav"><option value="true"”+(i.available?” selected”:””)+”>Si</option><option value="false"”+(!i.available?” selected”:””)+”>No</option></select></div></div><div class="fa"><button class="bt bt2" onclick="CM()">Cancelar</button><button class="bt bt1" onclick="sP(’”+eid+”’)">Guardar</button></div>”}
+function sP(id){var o={name:document.getElementById(“fn”).value,type:document.getElementById(“ft”).value,address:document.getElementById(“fa2”).value,rooms:+document.getElementById(“fr2”).value,available:document.getElementById(“fav”).value===“true”,depositAmount:+document.getElementById(“fd”).value};if(!o.name)return alert(“Ingresa un nombre”);id?updI(“properties”,id,o):addI(“properties”,o)}
 
-function saveData() {
-try { localStorage.setItem(STORAGE_KEY, JSON.stringify(D)); syncUI(‘ok’); }
-catch(e) { syncUI(‘off’); }
-}
+function TF(it){var i=it||{name:””,phone:””,email:””,dni:””};var eid=it?i.id:””;return “<div class="ff"><label>Nombre</label><input id="fn" value="”+E(i.name)+”"></div><div class="fr"><div class="ff"><label>Telefono</label><input id="fp" value="”+E(i.phone)+”"></div><div class="ff"><label>DNI</label><input id="fdn" value="”+E(i.dni)+”"></div></div><div class="ff"><label>Email</label><input id="fe" value="”+E(i.email)+”"></div><div class="fa"><button class="bt bt2" onclick="CM()">Cancelar</button><button class="bt bt1" onclick="sT(’”+eid+”’)">Guardar</button></div>”}
+function sT(id){var o={name:document.getElementById(“fn”).value,phone:document.getElementById(“fp”).value,email:document.getElementById(“fe”).value,dni:document.getElementById(“fdn”).value};if(!o.name)return alert(“Ingresa un nombre”);id?updI(“tenants”,id,o):addI(“tenants”,o)}
 
-function syncUI(s) {
-var e = document.getElementById(‘syncSt’);
-if (!e) return;
-if (s === ‘ok’) { e.className = ‘syncs syn-ok’; e.textContent = ‘🟢 Datos guardados’; }
-else { e.className = ‘syncs syn-off’; e.textContent = ‘🔴 Error al guardar’; }
-}
+function OF(it){var i=it||{name:””,phone:””,email:””,mood:3};var eid=it?i.id:””;return “<div class="ff"><label>Nombre</label><input id="fn" value="”+E(i.name)+”"></div><div class="fr"><div class="ff"><label>Telefono</label><input id="fp" value="”+E(i.phone)+”"></div><div class="ff"><label>Email</label><input id="fe" value="”+E(i.email)+”"></div></div><div class="ff"><label>Animo (<span id="mv">”+i.mood+”</span>/5)</label><input type="range" min="1" max="5" value="”+i.mood+”" id="fm" oninput="document.getElementById(‘mv’).textContent=this.value"><div class="rl"><span>Muy mal</span><span>Excelente</span></div></div><div class="fa"><button class="bt bt2" onclick="CM()">Cancelar</button><button class="bt bt1" onclick="sO(’”+eid+”’)">Guardar</button></div>”}
+function sO(id){var o={name:document.getElementById(“fn”).value,phone:document.getElementById(“fp”).value,email:document.getElementById(“fe”).value,mood:+document.getElementById(“fm”).value};if(!o.name)return alert(“Ingresa un nombre”);id?updI(“owners”,id,o):addI(“owners”,o)}
 
-function exportData() {
-var blob = new Blob([JSON.stringify(D, null, 2)], {type: ‘application/json’});
-var a = document.createElement(‘a’);
-a.href = URL.createObjectURL(blob);
-a.download = ‘rentacrm-backup-’ + new Date().toISOString().slice(0,10) + ‘.json’;
-a.click();
-}
+function CF(it){var i=it||{propertyId:(D.properties[0]||{}).id||””,tenantId:(D.tenants[0]||{}).id||””,ownerId:(D.owners[0]||{}).id||””,rent:0,commission:0,startDate:””,endDate:””,active:true};var eid=it?i.id:””;var po=””,to=””,oo=””;for(var j=0;j<D.properties.length;j++){var p=D.properties[j];po+=”<option value="”+p.id+”"”+(i.propertyId===p.id?” selected”:””)+”>”+E(p.name)+”</option>”}for(var j=0;j<D.tenants.length;j++){var t=D.tenants[j];to+=”<option value="”+t.id+”"”+(i.tenantId===t.id?” selected”:””)+”>”+E(t.name)+”</option>”}for(var j=0;j<D.owners.length;j++){var o=D.owners[j];oo+=”<option value="”+o.id+”"”+(i.ownerId===o.id?” selected”:””)+”>”+E(o.name)+”</option>”}return “<div class="fr"><div class="ff"><label>Propiedad</label><select id="fpr">”+po+”</select></div><div class="ff"><label>Inquilino</label><select id="fte">”+to+”</select></div></div><div class="fr"><div class="ff"><label>Propietario</label><select id="fow">”+oo+”</select></div><div class="ff"><label>Comision (%)</label><input type="number" id="fco" value="”+i.commission+”"></div></div><div class="fr"><div class="ff"><label>Alquiler ($)</label><input type="number" id="fre" value="”+i.rent+”"></div><div class="ff"><label>Estado</label><select id="fac"><option value="true"”+(i.active?” selected”:””)+”>Activo</option><option value="false"”+(!i.active?” selected”:””)+”>Finalizado</option></select></div></div><div class="fr"><div class="ff"><label>Inicio</label><input type="date" id="fsd" value="”+i.startDate+”"></div><div class="ff"><label>Fin</label><input type="date" id="fed" value="”+i.endDate+”"></div></div><div class="fa"><button class="bt bt2" onclick="CM()">Cancelar</button><button class="bt bt1" onclick="sC(’”+eid+”’)">Guardar</button></div>”}
+function sC(id){var o={propertyId:document.getElementById(“fpr”).value,tenantId:document.getElementById(“fte”).value,ownerId:document.getElementById(“fow”).value,rent:+document.getElementById(“fre”).value,commission:+document.getElementById(“fco”).value,startDate:document.getElementById(“fsd”).value,endDate:document.getElementById(“fed”).value,active:document.getElementById(“fac”).value===“true”};if(!o.rent)return alert(“Ingresa el alquiler”);id?updI(“contracts”,id,o):addI(“contracts”,o)}
 
-function importData() {
-var input = document.createElement(‘input’);
-input.type = ‘file’;
-input.accept = ‘.json’;
-input.onchange = function(e) {
-var file = e.target.files[0];
-if (!file) return;
-var reader = new FileReader();
-reader.onload = function(ev) {
-try {
-var data = JSON.parse(ev.target.result);
-if (data.properties && data.tenants) {
-D = data;
-saveData();
-render();
-alert(’¡Datos importados correctamente!’);
-} else { alert(‘Archivo inválido’); }
-} catch(err) { alert(‘Error al leer el archivo’); }
-};
-reader.readAsText(file);
-};
-input.click();
-}
+function YF(it){var ac=D.contracts.filter(function(c){return c.active});var i=it||{contractId:(ac[0]||{}).id||””,month:””,amount:(ac[0]||{}).rent||0,paid:false,paidDate:null};var eid=it?i.id:””;var co=””;for(var j=0;j<ac.length;j++){var c=ac[j];co+=”<option value="”+c.id+”"”+(i.contractId===c.id?” selected”:””)+”>”+E((gP(c.propertyId).name||””))+” - “+E((gT(c.tenantId).name||””))+”</option>”}return “<div class="ff"><label>Contrato</label><select id="fcn">”+co+”</select></div><div class="fr"><div class="ff"><label>Mes</label><input type="month" id="fmo" value="”+i.month+”"></div><div class="ff"><label>Monto ($)</label><input type="number" id="fam" value="”+i.amount+”"></div></div><div class="fr"><div class="ff"><label>Estado</label><select id="fpd" onchange="document.getElementById(‘pw’).style.display=this.value===‘true’?‘block’:‘none’"><option value="false"”+(!i.paid?” selected”:””)+”>Pendiente</option><option value="true"”+(i.paid?” selected”:””)+”>Pagado</option></select></div><div class="ff" id="pw" style="display:”+(i.paid?“block”:“none”)+”"><label>Fecha pago</label><input type="date" id="fpdt" value="”+(i.paidDate||””)+”"></div></div><div class="fa"><button class="bt bt2" onclick="CM()">Cancelar</button><button class="bt bt1" onclick="sY(’”+eid+”’)">Guardar</button></div>”}
+function sY(id){var pd=document.getElementById(“fpd”).value===“true”;var o={contractId:document.getElementById(“fcn”).value,month:document.getElementById(“fmo”).value,amount:+document.getElementById(“fam”).value,paid:pd,paidDate:pd?(document.getElementById(“fpdt”).value||new Date().toISOString().split(“T”)[0]):null};if(!o.month)return alert(“Selecciona un mes”);id?updI(“payments”,id,o):addI(“payments”,o)}
 
-// ===================== SEED DATA =====================
-var SEED={
-properties:[
-{id:“p1”,name:“Depto 2 amb Centro”,type:“Departamento”,address:“Av. Rivadavia 1234, CABA”,rooms:2,available:false,depositAmount:200000},
-{id:“p2”,name:“Casa 3 dorm Guadalupe”,type:“Casa”,address:“Calle San Martín 567, Guadalupe”,rooms:3,available:false,depositAmount:400000},
-{id:“p3”,name:“PH reciclado Barrio Sur”,type:“PH”,address:“Pasaje Los Andes 89, Barrio Sur”,rooms:2,available:true,depositAmount:280000},
-{id:“p4”,name:“Monoambiente Microcentro”,type:“Departamento”,address:“Lavalle 890, CABA”,rooms:1,available:true,depositAmount:150000},
-{id:“p5”,name:“Depto 3 amb Palermo”,type:“Departamento”,address:“Honduras 4200, CABA”,rooms:3,available:false,depositAmount:450000},
-{id:“p6”,name:“Casa 4 dorm Caballito”,type:“Casa”,address:“Av. Pedro Goyena 1100, CABA”,rooms:4,available:true,depositAmount:500000}
-],
-tenants:[
-{id:“t1”,name:“Martín Aguirre”,phone:“11-2345-6789”,email:“martin.a@email.com”,dni:“30.456.789”},
-{id:“t2”,name:“Luciana Méndez”,phone:“11-3456-7890”,email:“luciana.m@email.com”,dni:“28.567.890”},
-{id:“t3”,name:“Familia Domínguez”,phone:“11-4567-8901”,email:“dominguez@email.com”,dni:“35.678.901”},
-{id:“t4”,name:“Carlos Pereyra”,phone:“11-5678-9012”,email:“carlos.p@email.com”,dni:“32.789.012”}
-],
-owners:[
-{id:“o1”,name:“Ricardo Fernández”,phone:“11-1111-2222”,email:“ricardo.f@email.com”,mood:3},
-{id:“o2”,name:“Claudia Rossi de Martínez”,phone:“11-2222-3333”,email:“claudia.r@email.com”,mood:3},
-{id:“o3”,name:“Inversiones del Litoral S.R.L.”,phone:“11-3333-4444”,email:“info@invlitoral.com”,mood:3},
-{id:“o4”,name:“Marta Elena Luciano”,phone:“11-4444-5555”,email:“marta.l@email.com”,mood:3}
-],
-contracts:[
-{id:“c1”,propertyId:“p1”,tenantId:“t1”,ownerId:“o1”,rent:420000,commission:10,startDate:“2024-06-01”,endDate:“2026-06-01”,active:true},
-{id:“c2”,propertyId:“p2”,tenantId:“t2”,ownerId:“o2”,rent:680000,commission:4,startDate:“2024-09-01”,endDate:“2026-09-01”,active:true},
-{id:“c3”,propertyId:“p5”,tenantId:“t4”,ownerId:“o3”,rent:550000,commission:8,startDate:“2025-01-01”,endDate:“2027-01-01”,active:true},
-{id:“c4”,propertyId:“p3”,tenantId:“t3”,ownerId:“o4”,rent:480000,commission:0,startDate:“2024-03-01”,endDate:“2025-03-01”,active:false}
-],
-payments:[
-{id:“pay1”,contractId:“c1”,month:“2026-02”,amount:420000,paid:true,paidDate:“2026-02-05”},
-{id:“pay2”,contractId:“c1”,month:“2026-01”,amount:420000,paid:true,paidDate:“2026-01-07”},
-{id:“pay3”,contractId:“c2”,month:“2026-02”,amount:680000,paid:true,paidDate:“2026-02-01”},
-{id:“pay4”,contractId:“c2”,month:“2026-01”,amount:680000,paid:true,paidDate:“2026-01-03”},
-{id:“pay5”,contractId:“c3”,month:“2026-02”,amount:550000,paid:false,paidDate:null},
-{id:“pay6”,contractId:“c3”,month:“2026-01”,amount:550000,paid:true,paidDate:“2026-01-10”},
-{id:“pay7”,contractId:“c1”,month:“2025-12”,amount:400000,paid:false,paidDate:null}
-],
-complaints:[
-{id:“q1”,propertyId:“p2”,tenantId:“t2”,ownerId:“o2”,subject:“Humedad en baño”,status:“abierta”,date:“2026-02-10”,description:“Filtración en el techo del baño”},
-{id:“q2”,propertyId:“p5”,tenantId:“t4”,ownerId:“o3”,subject:“Calefacción rota”,status:“abierta”,date:“2026-02-15”,description:“El calefactor central no enciende”},
-{id:“q3”,propertyId:“p1”,tenantId:“t1”,ownerId:“o1”,subject:“Portero eléctrico”,status:“abierta”,date:“2026-02-20”,description:“No funciona el portero eléctrico”},
-{id:“q4”,propertyId:“p3”,tenantId:“t3”,ownerId:“o4”,subject:“Caño roto cocina”,status:“abierta”,date:“2026-01-28”,description:“Pérdida de agua en cocina”}
-]};
+function QF(it){var i=it||{propertyId:(D.properties[0]||{}).id||””,tenantId:(D.tenants[0]||{}).id||””,ownerId:(D.owners[0]||{}).id||””,subject:””,status:“abierta”,date:new Date().toISOString().split(“T”)[0],description:””};var eid=it?i.id:””;var po=””,to=””,oo=””;for(var j=0;j<D.properties.length;j++){var p=D.properties[j];po+=”<option value="”+p.id+”"”+(i.propertyId===p.id?” selected”:””)+”>”+E(p.name)+”</option>”}for(var j=0;j<D.tenants.length;j++){var t=D.tenants[j];to+=”<option value="”+t.id+”"”+(i.tenantId===t.id?” selected”:””)+”>”+E(t.name)+”</option>”}for(var j=0;j<D.owners.length;j++){var o=D.owners[j];oo+=”<option value="”+o.id+”"”+(i.ownerId===o.id?” selected”:””)+”>”+E(o.name)+”</option>”}return “<div class="ff"><label>Asunto</label><input id="fsb" value="”+E(i.subject)+”"></div><div class="fr"><div class="ff"><label>Propiedad</label><select id="fpr">”+po+”</select></div><div class="ff"><label>Inquilino</label><select id="fte">”+to+”</select></div></div><div class="fr"><div class="ff"><label>Propietario</label><select id="fow">”+oo+”</select></div><div class="ff"><label>Estado</label><select id="fst"><option”+(i.status===“abierta”?” selected”:””)+”>abierta</option><option”+(i.status===“en progreso”?” selected”:””)+”>en progreso</option><option”+(i.status===“resuelta”?” selected”:””)+”>resuelta</option></select></div></div><div class="ff"><label>Descripcion</label><textarea id="fds">”+E(i.description)+”</textarea></div><div class="fa"><button class="bt bt2" onclick="CM()">Cancelar</button><button class="bt bt1" onclick="sQ(’”+eid+”’)">Guardar</button></div>”}
+function sQ(id){var o={propertyId:document.getElementById(“fpr”).value,tenantId:document.getElementById(“fte”).value,ownerId:document.getElementById(“fow”).value,subject:document.getElementById(“fsb”).value,status:document.getElementById(“fst”).value,date:new Date().toISOString().split(“T”)[0],description:document.getElementById(“fds”).value};if(!o.subject)return alert(“Ingresa un asunto”);id?updI(“complaints”,id,o):addI(“complaints”,o)}
 
-// ===================== INIT =====================
-var loaded = loadData();
-var D = (loaded && loaded.properties) ? loaded : JSON.parse(JSON.stringify(SEED));
-var sec = ‘panel’;
-saveData();
+function EI(c,id,fn){for(var i=0;i<D[c].length;i++)if(D[c][i].id===id){OM(“Editar”,window[fn](D[c][i]));return}}
 
-function save() { saveData(); }
-function resetData() { if(!confirm(’¿Resetear todos los datos?’))return; D=JSON.parse(JSON.stringify(SEED)); save(); render(); }
+function rPanel(){var s=ST();var ml=s.mor<.1?“grn”:s.mor<.25?“yel”:“red”,mll=s.mor<.1?“BAJO”:s.mor<.25?“MEDIO”:“ALTO”;var al=s.am>=4?“grn”:s.am>=3?“yel”:“red”,all=s.am>=4?“BUENO”:s.am>=3?“REGULAR”:“MALO”;var vl=s.avP<20?“grn”:s.avP<40?“yel”:“red”,vll=s.avP<20?“OPTIMO”:s.avP<40?“MODERADO”:“CRITICO”;var cl=s.oc<=1?“grn”:s.oc<=3?“yel”:“red”,cll=s.oc<=1?“BAJO”:s.oc<=3?“MEDIO”:“ALTO”;var er=””;for(var j=0;j<s.a.length;j++){var c=s.a[j];var pc=0;for(var k=0;k<D.payments.length;k++)if(D.payments[k].contractId===c.id&&D.payments[k].paid)pc++;er+=”<tr><td style="font-weight:600">”+E(gP(c.propertyId).name||””)+”</td><td style="color:#94a3b8">”+E(gT(c.tenantId).name||””)+”</td><td>”+fmt(c.rent)+”</td><td style="color:”+(c.commission>0?”#22c55e”:”#ef4444”)+”;font-weight:700">”+c.commission+”%</td><td style="color:#8b5cf6;font-weight:700">”+fmt(c.rent*c.commission/100)+”</td><td>”+fmt(pc*c.rent*c.commission/100)+”</td></tr>”}var ow=””;for(var j=0;j<D.owners.length;j++){var o=D.owners[j];var oq=0,mo=false;for(var k=0;k<D.complaints.length;k++)if(D.complaints[k].ownerId===o.id&&D.complaints[k].status===“abierta”)oq++;for(var k=0;k<D.contracts.length;k++){var cc=D.contracts[k];if(cc.ownerId===o.id&&cc.active)for(var m=0;m<D.payments.length;m++)if(D.payments[m].contractId===cc.id&&!D.payments[m].paid)mo=true}var tg=””;if(mo)tg+=”<span class="owt" style="background:rgba(234,179,8,.12);color:#eab308">⚠ Moroso</span>”;if(oq>0)tg+=”<span class="owt" style="background:rgba(239,68,68,.12);color:#ef4444">🔧 Queja</span>”;ow+=”<div class="ow"><div class="owl"><div class="av" style="background:”+AV(o.name)+”">”+IN(o.name)+”</div><div><div style="font-weight:600;font-size:14px">”+E(o.name)+”</div><div style="margin-top:4px">”+tg+”</div></div></div><div style="display:flex;align-items:center;gap:8px"><span style="color:#94a3b8;font-size:12px">Animo</span><span style="font-size:20px">”+MJ(o.mood)+”</span><span style="font-weight:700">”+o.mood+”</span></div></div>”}return “<div class="hero"><div class="hl">Monto total administrado</div><div class="ha">”+fmt(s.tm)+”</div><div class="hs">Alquileres: “+fmt(s.tr)+”/mes + Depositos: “+fmt(s.td)+”</div><div class="hp"><div class="pl plg"><div class="plb">💵 INGRESO RECURRENTE</div><div class="plv">”+fmt(s.mc)+”<span>/mes</span></div></div><div class="pl plp"><div class="plb">💼 COMISIONES</div><div class="plv">”+fmt(s.mc*12)+”<span>/ano</span></div></div></div><div class="hf">”+D.properties.length+” propiedades | “+D.owners.length+” propietarios | “+s.a.length+” inquilinos activos</div></div><div class="st">🎛 Tablero de Control</div><div class="cg"><div class="cc “+ml+”"><div class="dt"></div><div class="ct">MOROSIDAD</div><div class="cv">”+mll+”</div><div class="cd">”+s.up.length+” pendientes</div></div><div class="cc “+al+”"><div class="dt"></div><div class="ct">ANIMO PROPIETARIOS</div><div class="cv">”+all+”</div><div class="cd">Promedio: “+s.am.toFixed(1)+”/5</div></div><div class="cc “+vl+”"><div class="dt"></div><div class="ct">DISPONIBILIDAD</div><div class="cv">”+vll+”</div><div class="cd">”+s.avC+”/”+D.properties.length+” (”+Math.round(s.avP)+”%)</div></div><div class="cc “+cl+”"><div class="dt"></div><div class="ct">QUEJAS ABIERTAS</div><div class="cv">”+cll+”</div><div class="cd">”+s.oc+” sin resolver</div></div></div><div class="sp"><div><div class="st">💰 Ganancias por Propiedad</div><div class="cd2"><table><thead><tr><th>Propiedad</th><th>Inquilino</th><th>Alquiler</th><th>Com.</th><th>Gan/mes</th><th>Total</th></tr></thead><tbody>”+(er||”<tr><td colspan="6" class="em">Sin contratos</td></tr>”)+”</tbody></table></div></div><div><div class="st">😊 Animo por Propietario</div>”+(ow||”<div class="em">Sin propietarios</div>”)+”</div></div>”}
 
-function fmt(n){return’$ ‘+Number(n).toLocaleString(‘es-AR’)}
-function uid(){return’id_’+Date.now()+’_’+Math.random().toString(36).slice(2,7)}
-function gP(id){return D.properties.find(function(p){return p.id===id})||{}}
-function gT(id){return D.tenants.find(function(t){return t.id===id})||{}}
-function gO(id){return D.owners.find(function(o){return o.id===id})||{}}
-function gC(id){return D.contracts.find(function(c){return c.id===id})||{}}
-function esc(s){var d=document.createElement(‘div’);d.textContent=s;return d.innerHTML}
-function mj(m){return{1:‘😡’,2:‘😟’,3:‘😐’,4:‘🙂’,5:‘😄’}[m]||‘😐’}
-function avc(n){return’hsl(’+(n||’’).length*37%360+’,45%,40%)’}
-function ini(n){return(n||’’).split(’ ‘).map(function(w){return w[0]}).join(’’).slice(0,2).toUpperCase()}
-function getToday(){var d=new Date(),ds=[‘domingo’,‘lunes’,‘martes’,‘miércoles’,‘jueves’,‘viernes’,‘sábado’],ms=[‘enero’,‘febrero’,‘marzo’,‘abril’,‘mayo’,‘junio’,‘julio’,‘agosto’,‘septiembre’,‘octubre’,‘noviembre’,‘diciembre’];return ds[d.getDay()]+’, ‘+d.getDate()+’ de ’+ms[d.getMonth()]}
+function rDash(){var s=ST(),now=new Date(),cm=now.getFullYear()+”-”+String(now.getMonth()+1).padStart(2,“0”);var pTM=0,pdTM=0;for(var i=0;i<D.payments.length;i++){if(D.payments[i].paid&&D.payments[i].month===cm)pTM+=D.payments[i].amount;if(!D.payments[i].paid&&D.payments[i].month===cm)pdTM+=D.payments[i].amount}var cr=””;for(var j=0;j<s.a.length;j++){var c=s.a[j];cr+=”<div class="lr"><div><strong>”+E(gP(c.propertyId).name||””)+”</strong> <span style="color:#64748b">- “+E(gT(c.tenantId).name||””)+”</span></div><span style="color:#22c55e;font-weight:700">”+fmt(c.rent)+”</span></div>”}var pr=””;for(var j=0;j<s.up.length;j++){var p=s.up[j];var cc=gC(p.contractId);pr+=”<div class="lr"><div><strong>”+E(gP(cc.propertyId).name||””)+”</strong> <span style="color:#64748b">”+p.month+”</span></div><div style="display:flex;align-items:center;gap:10px"><span style="color:#ef4444;font-weight:700">”+fmt(p.amount)+”</span><button class="btc" onclick="MP(’”+p.id+”’)">Cobrar</button></div></div>”}return “<div class="sh"><h3>📊 Dashboard</h3></div><div class="dg"><div class="dc"><div class="di">🏠</div><div class="dl">Alquileres mensuales</div><div class="dv" style="color:#22c55e">”+fmt(s.tr)+”</div></div><div class="dc"><div class="di">💼</div><div class="dl">Comisiones mensuales</div><div class="dv" style="color:#8b5cf6">”+fmt(s.mc)+”</div></div><div class="dc"><div class="di">✅</div><div class="dl">Cobrado este mes</div><div class="dv" style="color:#06b6d4">”+fmt(pTM)+”</div></div><div class="dc"><div class="di">⏳</div><div class="dl">Pendiente este mes</div><div class="dv" style="color:#ef4444">”+fmt(pdTM)+”</div></div></div><div class="sp"><div class="cd2"><div class="cd2b"><h4 style="font-weight:700;margin-bottom:14px">Contratos activos</h4>”+(cr||”<div class="em">Sin contratos</div>”)+”</div></div><div class="cd2"><div class="cd2b"><h4 style="font-weight:700;margin-bottom:14px">Pagos pendientes</h4>”+(pr||”<div class="em">Sin pendientes</div>”)+”</div></div></div>”}
 
-function stats(){
-var a=D.contracts.filter(function(c){return c.active}),tr=a.reduce(function(s,c){return s+c.rent},0),
-td=D.properties.reduce(function(s,p){return s+(p.depositAmount||0)},0),tm=tr*2+td,
-mc=a.reduce(function(s,c){return s+(c.rent*c.commission/100)},0),
-up=D.payments.filter(function(p){return!p.paid}),uci=[],avC=0,oc=0,am=3;
-up.forEach(function(p){if(uci.indexOf(p.contractId)===-1)uci.push(p.contractId)});
-var mC=uci.filter(function(cid){return a.find(function(c){return c.id===cid})}).length;
-var mor=a.length>0?mC/a.length:0;
-D.properties.forEach(function(p){if(p.available)avC++});
-var avP=D.properties.length>0?(avC/D.properties.length*100):0;
-D.complaints.forEach(function(q){if(q.status===‘abierta’)oc++});
-if(D.owners.length>0)am=D.owners.reduce(function(s,o){return s+(o.mood||3)},0)/D.owners.length;
-return{tm:tm,tr:tr,td:td,mc:mc,mor:mor,avC:avC,avP:avP,oc:oc,am:am,a:a,up:up};
-}
+function CT(col,title,icon,cols,fn){var rows=””;for(var j=0;j<D[col].length;j++){var it=D[col][j];var cells=””;for(var k=0;k<cols.length;k++){var c=cols[k];var v=c.r?c.r(it):E(String(it[c.k]||””));cells+=”<td”+(c.s?” style="”+c.s+”"”:””)+”>”+v+”</td>”}cells+=”<td style="text-align:center"><button class="bti" onclick="EI(’”+col+”’,’”+it.id+”’,’”+fn+”’)" title="Editar">✏️</button><button class="bti" onclick="delI(’”+col+”’,’”+it.id+”’)" title="Eliminar">🗑️</button></td>”;rows+=”<tr>”+cells+”</tr>”}var ths=””;for(var k=0;k<cols.length;k++)ths+=”<th>”+cols[k].l+”</th>”;ths+=”<th style="text-align:center">Acciones</th>”;return “<div class="sh"><h3>”+icon+” “+title+”</h3><button class="bt bt1" onclick="OM(‘Nuevo’,”+fn+”())">+ Agregar</button></div><div class="cd2"><table><thead><tr>”+ths+”</tr></thead><tbody>”+(rows||”<tr><td colspan="”+(cols.length+1)+”" class="em">Sin registros</td></tr>”)+”</tbody></table></div>”}
 
-// ===================== CRUD =====================
-function addI(col,item){item.id=uid();D[col].push(item);save();closeM();render()}
-function updI(col,id,upd){var i=D[col].findIndex(function(x){return x.id===id});if(i>=0)Object.assign(D[col][i],upd);save();closeM();render()}
-function delI(col,id){if(!confirm(’¿Eliminar?’))return;D[col]=D[col].filter(function(x){return x.id!==id});save();render()}
-function markP(id){var p=D.payments.find(function(x){return x.id===id});if(p){p.paid=true;p.paidDate=new Date().toISOString().split(‘T’)[0]}save();render()}
+function rProps(){return CT(“properties”,“Propiedades”,”🏠”,[{k:“name”,l:“Nombre”,s:“font-weight:600”},{k:“type”,l:“Tipo”},{k:“address”,l:“Direccion”},{k:“rooms”,l:“Amb.”},{k:“available”,l:“Estado”,r:function(i){return i.available?”<span class="bg bgn">Disponible</span>”:”<span class="bg bpr">Alquilada</span>”}},{k:“depositAmount”,l:“Deposito”,r:function(i){return fmt(i.depositAmount)}}],“PF”)}
+function rTen(){return CT(“tenants”,“Inquilinos”,”🔑”,[{k:“name”,l:“Nombre”,s:“font-weight:600”},{k:“dni”,l:“DNI”},{k:“phone”,l:“Telefono”},{k:“email”,l:“Email”}],“TF”)}
+function rOwn(){return CT(“owners”,“Propietarios”,”👤”,[{k:“name”,l:“Nombre”,s:“font-weight:600”},{k:“phone”,l:“Telefono”},{k:“email”,l:“Email”},{k:“mood”,l:“Animo”,r:function(i){return “<span style="display:flex;align-items:center;gap:6px">”+MJ(i.mood)+” <strong>”+i.mood+”/5</strong></span>”}}],“OF”)}
+function rCon(){return CT(“contracts”,“Contratos”,”📝”,[{k:“propertyId”,l:“Propiedad”,s:“font-weight:600”,r:function(i){return E(gP(i.propertyId).name||”-”)}},{k:“tenantId”,l:“Inquilino”,r:function(i){return E(gT(i.tenantId).name||”-”)}},{k:“ownerId”,l:“Propietario”,r:function(i){return E(gO(i.ownerId).name||”-”)}},{k:“rent”,l:“Alquiler”,r:function(i){return fmt(i.rent)}},{k:“commission”,l:“Com.”,r:function(i){return “<span style="color:#22c55e;font-weight:700">”+i.commission+”%</span>”}},{k:“active”,l:“Estado”,r:function(i){return i.active?”<span class="bg bgn">Activo</span>”:”<span class="bg bgr">Fin</span>”}}],“CF”)}
+function rPay(){return CT(“payments”,“Cobranzas”,”💰”,[{k:“contractId”,l:“Propiedad”,s:“font-weight:600”,r:function(i){return E(gP(gC(i.contractId).propertyId).name||”-”)}},{k:”_t”,l:“Inquilino”,r:function(i){return E(gT(gC(i.contractId).tenantId).name||”-”)}},{k:“month”,l:“Mes”},{k:“amount”,l:“Monto”,r:function(i){return fmt(i.amount)}},{k:“paid”,l:“Estado”,r:function(i){return i.paid?”<span class="bg bgn">Pagado</span>”:”<span class="bg brd">Pendiente</span>”}},{k:“paidDate”,l:“Fecha”,r:function(i){return i.paidDate||”-”}}],“YF”)}
+function rQue(){return CT(“complaints”,“Quejas”,”📣”,[{k:“subject”,l:“Asunto”,s:“font-weight:600”},{k:“propertyId”,l:“Propiedad”,r:function(i){return E(gP(i.propertyId).name||”-”)}},{k:“tenantId”,l:“Inquilino”,r:function(i){return E(gT(i.tenantId).name||”-”)}},{k:“status”,l:“Estado”,r:function(i){var c=i.status===“abierta”?“brd”:i.status===“en progreso”?“byl”:“bgn”;return “<span class="bg “+c+”" style="text-transform:capitalize">”+E(i.status)+”</span>”}},{k:“date”,l:“Fecha”}],“QF”)}
 
-function openM(t,h){document.getElementById(‘modalRoot’).innerHTML=’<div class="mo" onclick="closeM()"><div class="mbox" onclick="event.stopPropagation()"><div class="mhdr"><h3>’+t+’</h3><button class="mclose" onclick="closeM()">✕</button></div>’+h+’</div></div>’}
-function closeM(){document.getElementById(‘modalRoot’).innerHTML=’’}
-
-// ===================== NAV =====================
-var NAV=[{h:‘ADMIN’},{k:‘panel’,i:‘⚡’,l:‘Panel Admin’},{h:‘GENERAL’},{k:‘dashboard’,i:‘📊’,l:‘Dashboard’},{h:‘PROPIEDADES’},{k:‘properties’,i:‘🏠’,l:‘Propiedades’},{k:‘owners’,i:‘👤’,l:‘Propietarios’},{h:‘GESTIÓN’},{k:‘tenants’,i:‘🔑’,l:‘Inquilinos’},{k:‘contracts’,i:‘📝’,l:‘Contratos’},{k:‘payments’,i:‘💰’,l:‘Cobranzas’},{k:‘complaints’,i:‘📢’,l:‘Quejas’}];
-
-function renderNav(){
-var oc=D.complaints.filter(function(q){return q.status===‘abierta’}).length,tc=D.tenants.length;
-var h=’’;NAV.forEach(function(n){
-if(n.h){h+=’<div class="nhdr">’+n.h+’</div>’;return}
-var b=’’;if(n.k===‘complaints’&&oc>0)b=’<span class="nbdg r">’+oc+’</span>’;
-else if(n.k===‘tenants’&&tc>0)b=’<span class="nbdg p">’+tc+’</span>’;
-h+=’<button class="nit '+(sec===n.k?'on':'')+'" onclick="nav(&#39;'+n.k+'&#39;)"><span class="ni">’+n.i+’</span>’+n.l+b+’</button>’;
-});document.getElementById(‘nav’).innerHTML=h;
-}
-function nav(s){sec=s;render()}
-// ===================== FORMS =====================
-function propForm(item){
-var i=item||{name:’’,type:‘Departamento’,address:’’,rooms:1,available:true,depositAmount:0},e=!!item;
-return ‘<div class="ff"><label>Nombre</label><input id="f_name" value="'+esc(i.name)+'"></div>’+
-‘<div class="frow"><div class="ff"><label>Tipo</label><select id="f_type"><option’+(i.type===‘Departamento’?’ selected’:’’)+’>Departamento</option><option’+(i.type===‘Casa’?’ selected’:’’)+’>Casa</option><option’+(i.type===‘PH’?’ selected’:’’)+’>PH</option><option’+(i.type===‘Local’?’ selected’:’’)+’>Local</option><option’+(i.type===‘Oficina’?’ selected’:’’)+’>Oficina</option></select></div>’+
-‘<div class="ff"><label>Ambientes</label><input type="number" id="f_rooms" value="'+i.rooms+'"></div></div>’+
-‘<div class="ff"><label>Dirección</label><input id="f_addr" value="'+esc(i.address)+'"></div>’+
-‘<div class="frow"><div class="ff"><label>Depósito ($)</label><input type="number" id="f_dep" value="'+i.depositAmount+'"></div>’+
-‘<div class="ff"><label>Disponible</label><select id="f_avail"><option value=“true”’+(i.available?’ selected’:’’)+’>Sí</option><option value=“false”’+(!i.available?’ selected’:’’)+’>No (alquilada)</option></select></div></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveProp(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
-}
-function saveProp(id){var o={name:document.getElementById(‘f_name’).value,type:document.getElementById(‘f_type’).value,address:document.getElementById(‘f_addr’).value,rooms:+document.getElementById(‘f_rooms’).value,available:document.getElementById(‘f_avail’).value===‘true’,depositAmount:+document.getElementById(‘f_dep’).value};if(!o.name)return alert(‘Ingresá un nombre’);id?updI(‘properties’,id,o):addI(‘properties’,o)}
-
-function tenForm(item){
-var i=item||{name:’’,phone:’’,email:’’,dni:’’},e=!!item;
-return ‘<div class="ff"><label>Nombre completo</label><input id="f_name" value="'+esc(i.name)+'"></div>’+
-‘<div class="frow"><div class="ff"><label>Teléfono</label><input id="f_phone" value="'+esc(i.phone)+'"></div><div class="ff"><label>DNI</label><input id="f_dni" value="'+esc(i.dni)+'"></div></div>’+
-‘<div class="ff"><label>Email</label><input id="f_email" value="'+esc(i.email)+'"></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveTen(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
-}
-function saveTen(id){var o={name:document.getElementById(‘f_name’).value,phone:document.getElementById(‘f_phone’).value,email:document.getElementById(‘f_email’).value,dni:document.getElementById(‘f_dni’).value};if(!o.name)return alert(‘Ingresá un nombre’);id?updI(‘tenants’,id,o):addI(‘tenants’,o)}
-
-function ownForm(item){
-var i=item||{name:’’,phone:’’,email:’’,mood:3},e=!!item;
-return ‘<div class="ff"><label>Nombre completo</label><input id="f_name" value="'+esc(i.name)+'"></div>’+
-‘<div class="frow"><div class="ff"><label>Teléfono</label><input id="f_phone" value="'+esc(i.phone)+'"></div><div class="ff"><label>Email</label><input id="f_email" value="'+esc(i.email)+'"></div></div>’+
-‘<div class="ff"><label>Ánimo (<span id="mVal">’+i.mood+’</span>/5)</label><input type="range" min="1" max="5" value="'+i.mood+'" id="f_mood" oninput="document.getElementById(&#39;mVal&#39;).textContent=this.value"><div class="rlbl"><span>😡 Muy mal</span><span>😄 Excelente</span></div></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveOwn(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
-}
-function saveOwn(id){var o={name:document.getElementById(‘f_name’).value,phone:document.getElementById(‘f_phone’).value,email:document.getElementById(‘f_email’).value,mood:+document.getElementById(‘f_mood’).value};if(!o.name)return alert(‘Ingresá un nombre’);id?updI(‘owners’,id,o):addI(‘owners’,o)}
-
-function conForm(item){
-var i=item||{propertyId:(D.properties[0]||{}).id||’’,tenantId:(D.tenants[0]||{}).id||’’,ownerId:(D.owners[0]||{}).id||’’,rent:0,commission:0,startDate:’’,endDate:’’,active:true},e=!!item;
-var po=’’,to=’’,oo=’’;
-D.properties.forEach(function(p){po+=’<option value=”’+p.id+’”’+(i.propertyId===p.id?’ selected’:’’)+’>’+esc(p.name)+’</option>’});
-D.tenants.forEach(function(t){to+=’<option value=”’+t.id+’”’+(i.tenantId===t.id?’ selected’:’’)+’>’+esc(t.name)+’</option>’});
-D.owners.forEach(function(o){oo+=’<option value=”’+o.id+’”’+(i.ownerId===o.id?’ selected’:’’)+’>’+esc(o.name)+’</option>’});
-return ‘<div class="frow"><div class="ff"><label>Propiedad</label><select id="f_prop">’+po+’</select></div><div class="ff"><label>Inquilino</label><select id="f_ten">’+to+’</select></div></div>’+
-‘<div class="frow"><div class="ff"><label>Propietario</label><select id="f_own">’+oo+’</select></div><div class="ff"><label>Comisión (%)</label><input type="number" id="f_comm" value="'+i.commission+'"></div></div>’+
-‘<div class="frow"><div class="ff"><label>Alquiler ($)</label><input type="number" id="f_rent" value="'+i.rent+'"></div><div class="ff"><label>Estado</label><select id="f_active"><option value=“true”’+(i.active?’ selected’:’’)+’>Activo</option><option value=“false”’+(!i.active?’ selected’:’’)+’>Finalizado</option></select></div></div>’+
-‘<div class="frow"><div class="ff"><label>Inicio</label><input type="date" id="f_start" value="'+i.startDate+'"></div><div class="ff"><label>Fin</label><input type="date" id="f_end" value="'+i.endDate+'"></div></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveCon(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
-}
-function saveCon(id){var o={propertyId:document.getElementById(‘f_prop’).value,tenantId:document.getElementById(‘f_ten’).value,ownerId:document.getElementById(‘f_own’).value,rent:+document.getElementById(‘f_rent’).value,commission:+document.getElementById(‘f_comm’).value,startDate:document.getElementById(‘f_start’).value,endDate:document.getElementById(‘f_end’).value,active:document.getElementById(‘f_active’).value===‘true’};if(!o.rent)return alert(‘Ingresá el alquiler’);id?updI(‘contracts’,id,o):addI(‘contracts’,o)}
-
-function payForm(item){
-var ac=D.contracts.filter(function(c){return c.active}),i=item||{contractId:(ac[0]||{}).id||’’,month:’’,amount:(ac[0]||{}).rent||0,paid:false,paidDate:null},e=!!item;
-var co=’’;ac.forEach(function(c){co+=’<option value=”’+c.id+’”’+(i.contractId===c.id?’ selected’:’’)+’>’+esc((gP(c.propertyId).name||’’))+’ - ‘+esc((gT(c.tenantId).name||’’))+’</option>’});
-return ‘<div class="ff"><label>Contrato</label><select id="f_con">’+co+’</select></div>’+
-‘<div class="frow"><div class="ff"><label>Mes</label><input type="month" id="f_month" value="'+i.month+'"></div><div class="ff"><label>Monto ($)</label><input type="number" id="f_amt" value="'+i.amount+'"></div></div>’+
-‘<div class="frow"><div class="ff"><label>Estado</label><select id="f_paid" onchange="document.getElementById('pdW').style.display=this.value==='true'?'block':'none'"><option value=“false”’+(!i.paid?’ selected’:’’)+’>Pendiente</option><option value=“true”’+(i.paid?’ selected’:’’)+’>Pagado</option></select></div>’+
-‘<div class="ff" id="pdW" style="display:'+(i.paid?'block':'none')+'"><label>Fecha pago</label><input type="date" id="f_pdate" value="'+(i.paidDate||'')+'"></div></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="savePay(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
-}
-function savePay(id){var paid=document.getElementById(‘f_paid’).value===‘true’;var o={contractId:document.getElementById(‘f_con’).value,month:document.getElementById(‘f_month’).value,amount:+document.getElementById(‘f_amt’).value,paid:paid,paidDate:paid?(document.getElementById(‘f_pdate’).value||new Date().toISOString().split(‘T’)[0]):null};if(!o.month)return alert(‘Seleccioná un mes’);id?updI(‘payments’,id,o):addI(‘payments’,o)}
-
-function queForm(item){
-var i=item||{propertyId:(D.properties[0]||{}).id||’’,tenantId:(D.tenants[0]||{}).id||’’,ownerId:(D.owners[0]||{}).id||’’,subject:’’,status:‘abierta’,date:new Date().toISOString().split(‘T’)[0],description:’’},e=!!item;
-var po=’’,to=’’,oo=’’;
-D.properties.forEach(function(p){po+=’<option value=”’+p.id+’”’+(i.propertyId===p.id?’ selected’:’’)+’>’+esc(p.name)+’</option>’});
-D.tenants.forEach(function(t){to+=’<option value=”’+t.id+’”’+(i.tenantId===t.id?’ selected’:’’)+’>’+esc(t.name)+’</option>’});
-D.owners.forEach(function(o){oo+=’<option value=”’+o.id+’”’+(i.ownerId===o.id?’ selected’:’’)+’>’+esc(o.name)+’</option>’});
-return ‘<div class="ff"><label>Asunto</label><input id="f_subj" value="'+esc(i.subject)+'"></div>’+
-‘<div class="frow"><div class="ff"><label>Propiedad</label><select id="f_prop">’+po+’</select></div><div class="ff"><label>Inquilino</label><select id="f_ten">’+to+’</select></div></div>’+
-‘<div class="frow"><div class="ff"><label>Propietario</label><select id="f_own">’+oo+’</select></div><div class="ff"><label>Estado</label><select id="f_status"><option’+(i.status===‘abierta’?’ selected’:’’)+’>abierta</option><option’+(i.status===‘en progreso’?’ selected’:’’)+’>en progreso</option><option’+(i.status===‘resuelta’?’ selected’:’’)+’>resuelta</option></select></div></div>’+
-‘<div class="ff"><label>Descripción</label><textarea id="f_desc">’+esc(i.description)+’</textarea></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveQue(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
-}
-function saveQue(id){var o={propertyId:document.getElementById(‘f_prop’).value,tenantId:document.getElementById(‘f_ten’).value,ownerId:document.getElementById(‘f_own’).value,subject:document.getElementById(‘f_subj’).value,status:document.getElementById(‘f_status’).value,date:new Date().toISOString().split(‘T’)[0],description:document.getElementById(‘f_desc’).value};if(!o.subject)return alert(‘Ingresá un asunto’);id?updI(‘complaints’,id,o):addI(‘complaints’,o)}
-// ===================== RENDERERS =====================
-function renderPanel(){
-var s=stats();
-var ml=s.mor<0.1?‘grn’:s.mor<0.25?‘yel’:‘red’,mll=s.mor<0.1?‘BAJO’:s.mor<0.25?‘MEDIO’:‘ALTO’;
-var al=s.am>=4?‘grn’:s.am>=3?‘yel’:‘red’,all=s.am>=4?‘BUENO’:s.am>=3?‘REGULAR’:‘MALO’;
-var vl=s.avP<20?‘grn’:s.avP<40?‘yel’:‘red’,vll=s.avP<20?‘ÓPTIMO’:s.avP<40?‘MODERADO’:‘CRÍTICO’;
-var cl=s.oc<=1?‘grn’:s.oc<=3?‘yel’:‘red’,cll=s.oc<=1?‘BAJO’:s.oc<=3?‘MEDIO’:‘ALTO’;
-
-var er=’’;s.a.forEach(function(c){var pc=D.payments.filter(function(p){return p.contractId===c.id&&p.paid}).length;
-er+=’<tr><td style="font-weight:600">’+esc(gP(c.propertyId).name||’’)+’</td><td style="color:var(--t2)">’+esc(gT(c.tenantId).name||’’)+’</td><td>’+fmt(c.rent)+’</td><td style="color:'+(c.commission>0?'var(--gn)':'var(--rd)')+';font-weight:700">’+c.commission+’%</td><td style="color:var(--ac);font-weight:700">’+fmt(c.rent*c.commission/100)+’</td><td>’+fmt(pc*c.rent*c.commission/100)+’</td></tr>’});
-
-var ow=’’;D.owners.forEach(function(o){
-var oq=D.complaints.filter(function(q){return q.ownerId===o.id&&q.status===‘abierta’});
-var oc2=D.contracts.filter(function(c){return c.ownerId===o.id&&c.active});
-var mo=oc2.some(function(c){return D.payments.some(function(p){return p.contractId===c.id&&!p.paid})});
-var tags=’’;if(mo)tags+=’<span class="owtag mor">⚠ Inquilino moroso</span>’;
-if(oq.length>0)tags+=’<span class="owtag que">🔧 Queja abierta</span>’;
-ow+=’<div class="ow"><div class="owl"><div class="av" style="background:'+avc(o.name)+'">’+ini(o.name)+’</div><div><div class="own">’+esc(o.name)+’</div><div class="owtags">’+tags+’</div></div></div><div class="owr"><span class="ml">Ánimo</span><span class="me">’+mj(o.mood)+’</span><span class="mn">’+o.mood+’</span></div></div>’});
-
-return ‘<div class="hero"><div class="hlbl">Monto total administrado por la inmobiliaria</div><div class="hamt">’+fmt(s.tm)+’</div><div class="hsub">Alquileres activos: ‘+fmt(s.tr)+’/mes + Depósitos en custodia: ‘+fmt(s.td)+’</div><div class="hpills"><div class="pill plg"><div class="plbl">💵 INGRESO RECURRENTE</div><div class="pval">’+fmt(s.mc)+’<span>/mes</span></div></div><div class="pill plp"><div class="plbl">💼 COMISIONES POR CONTRATO</div><div class="pval">’+fmt(s.mc*12)+’<span> acumuladas/año</span></div></div></div><div class="hfoot">’+D.properties.length+’ propiedades · ‘+D.owners.length+’ propietarios · ‘+s.a.length+’ inquilinos activos</div></div>’+
-‘<div class="stitle">🎛️ Tablero de Control</div><div class="cgrid">’+
-‘<div class="ccard '+ml+'"><div class="dot"></div><div class="ct">MOROSIDAD</div><div class="cv">’+mll+’</div><div class="cd">’+s.up.length+’ pagos pendientes</div><div class="cs"><10% verde · 10-25% amarillo · >25% rojo</div></div>’+
-‘<div class="ccard '+al+'"><div class="dot"></div><div class="ct">ÁNIMO PROPIETARIOS</div><div class="cv">’+all+’</div><div class="cd">Promedio: ‘+s.am.toFixed(1)+’/5</div><div class="cs">≥4 verde · 3-4 amarillo · <3 rojo</div></div>’+
-‘<div class="ccard '+vl+'"><div class="dot"></div><div class="ct">DISPONIBILIDAD</div><div class="cv">’+vll+’</div><div class="cd">’+s.avC+’/’+D.properties.length+’ disponibles (’+Math.round(s.avP)+’%)</div><div class="cs"><20% verde · 20-40% amarillo · >40% rojo</div></div>’+
-‘<div class="ccard '+cl+'"><div class="dot"></div><div class="ct">QUEJAS ABIERTAS</div><div class="cv">’+cll+’</div><div class="cd">’+s.oc+’ sin resolver</div><div class="cs">0-1 verde · 2-3 amarillo · 4+ rojo</div></div></div>’+
-‘<div class="split"><div><div class="stitle">💰 Ganancias por Propiedad</div><div class="card"><table><thead><tr><th>Propiedad</th><th>Inquilino</th><th>Alquiler</th><th>Com.</th><th>Gan. Mensual</th><th>Com. Total</th></tr></thead><tbody>’+(er||’<tr><td colspan="6" class="empty">Sin contratos activos</td></tr>’)+’</tbody></table></div></div>’+
-‘<div><div class="stitle">😊 Ánimo por Propietario</div>’+(ow||’<div class="empty">Sin propietarios</div>’)+’</div></div>’;
-}
-
-function renderDashboard(){
-var s=stats(),now=new Date(),cm=now.getFullYear()+’-’+String(now.getMonth()+1).padStart(2,‘0’);
-var pTM=D.payments.filter(function(p){return p.paid&&p.month===cm}).reduce(function(a,p){return a+p.amount},0);
-var pendTM=D.payments.filter(function(p){return!p.paid&&p.month===cm}).reduce(function(a,p){return a+p.amount},0);
-var cr=’’;s.a.forEach(function(c){cr+=’<div class="lr"><div><strong>’+esc(gP(c.propertyId).name||’’)+’</strong> <span style="color:var(--t3)">— ‘+esc(gT(c.tenantId).name||’’)+’</span></div><span style="color:var(--gn);font-weight:700">’+fmt(c.rent)+’</span></div>’});
-var pr=’’;s.up.forEach(function(p){var c=gC(p.contractId);pr+=’<div class="lr"><div><strong>’+esc(gP(c.propertyId).name||’’)+’</strong> <span style="color:var(--t3)">· ‘+p.month+’</span></div><div style="display:flex;align-items:center;gap:10px"><span style="color:var(--rd);font-weight:700">’+fmt(p.amount)+’</span><button class="btnco" onclick="markP(&#39;'+p.id+'&#39;)">Cobrar</button></div></div>’});
-return ‘<div class="sh"><h3>📊 Dashboard General</h3></div><div class="dg">’+
-‘<div class="dc"><div class="di">🏠</div><div class="dl">Alquileres mensuales</div><div class="dv" style="color:var(--gn)">’+fmt(s.tr)+’</div></div>’+
-‘<div class="dc"><div class="di">💼</div><div class="dl">Comisiones mensuales</div><div class="dv" style="color:var(--ac)">’+fmt(s.mc)+’</div></div>’+
-‘<div class="dc"><div class="di">✅</div><div class="dl">Cobrado este mes</div><div class="dv" style="color:var(--cy)">’+fmt(pTM)+’</div></div>’+
-‘<div class="dc"><div class="di">⏳</div><div class="dl">Pendiente este mes</div><div class="dv" style="color:var(--rd)">’+fmt(pendTM)+’</div></div></div>’+
-‘<div class="split"><div class="card"><div class="cardb"><h4 style="font-weight:700;margin-bottom:14px">Contratos activos</h4>’+(cr||’<div class="empty">Sin contratos</div>’)+’</div></div>’+
-‘<div class="card"><div class="cardb"><h4 style="font-weight:700;margin-bottom:14px">Pagos pendientes</h4>’+(pr||’<div class="empty">🎉 No hay pagos pendientes</div>’)+’</div></div></div>’;
-}
-
-function crudTable(col,title,icon,cols,formFn){
-var rows=’’;D[col].forEach(function(item){
-var cells=’’;cols.forEach(function(c){var v=c.r?c.r(item):esc(String(item[c.k]||’’));cells+=’<td’+(c.s?’ style=”’+c.s+’”’:’’)+’>’+v+’</td>’});
-cells+=’<td style="text-align:center"><button class="bti" onclick="editItem(&#39;'+col+'&#39;,&#39;'+item.id+'&#39;,&#39;'+formFn+'&#39;)" title="Editar">✏️</button><button class="bti" onclick="delI(&#39;'+col+'&#39;,&#39;'+item.id+'&#39;)" title="Eliminar">🗑️</button></td>’;
-rows+=’<tr>’+cells+’</tr>’;
-});
-var ths=’’;cols.forEach(function(c){ths+=’<th>’+c.l+’</th>’});ths+=’<th style="text-align:center">Acciones</th>’;
-return ‘<div class="sh"><h3>’+icon+’ ‘+title+’</h3><button class="btn btn1" onclick="openM(&#39;Nuevo&#39;,'+formFn+'())">+ Agregar</button></div>’+
-‘<div class="card"><table><thead><tr>’+ths+’</tr></thead><tbody>’+(rows||’<tr><td colspan="'+(cols.length+1)+'" class="empty">No hay registros. ¡Agregá uno!</td></tr>’)+’</tbody></table></div>’;
-}
-
-function editItem(col,id,formFn){var item=D[col].find(function(x){return x.id===id});if(item)openM('Editar',window[formFn](item))}
-
-function renderProperties(){return crudTable(‘properties’,‘Propiedades’,‘🏠’,[
-{k:‘name’,l:‘Nombre’,s:‘font-weight:600’},{k:‘type’,l:‘Tipo’},{k:‘address’,l:‘Dirección’},{k:‘rooms’,l:‘Amb.’},
-{k:‘available’,l:‘Estado’,r:function(i){return i.available?’<span class="bdg bg">Disponible</span>’:’<span class="bdg bp">Alquilada</span>’}},
-{k:‘depositAmount’,l:‘Depósito’,r:function(i){return fmt(i.depositAmount)}}
-],‘propForm’)}
-
-function renderTenants(){return crudTable(‘tenants’,‘Inquilinos’,‘🔑’,[
-{k:‘name’,l:‘Nombre’,s:‘font-weight:600’},{k:‘dni’,l:‘DNI’},{k:‘phone’,l:‘Teléfono’},{k:‘email’,l:‘Email’}
-],‘tenForm’)}
-
-function renderOwners(){return crudTable(‘owners’,‘Propietarios’,‘👤’,[
-{k:‘name’,l:‘Nombre’,s:‘font-weight:600’},{k:‘phone’,l:‘Teléfono’},{k:‘email’,l:‘Email’},
-{k:‘mood’,l:‘Ánimo’,r:function(i){return ‘<span style="display:flex;align-items:center;gap:6px">’+mj(i.mood)+’ <strong>’+i.mood+’/5</strong></span>’}}
-],‘ownForm’)}
-
-function renderContracts(){return crudTable(‘contracts’,‘Contratos’,‘📝’,[
-{k:‘propertyId’,l:‘Propiedad’,s:‘font-weight:600’,r:function(i){return esc(gP(i.propertyId).name||’—’)}},
-{k:‘tenantId’,l:‘Inquilino’,r:function(i){return esc(gT(i.tenantId).name||’—’)}},
-{k:‘ownerId’,l:‘Propietario’,r:function(i){return esc(gO(i.ownerId).name||’—’)}},
-{k:‘rent’,l:‘Alquiler’,r:function(i){return fmt(i.rent)}},
-{k:‘commission’,l:‘Com.’,r:function(i){return ‘<span style="color:var(--gn);font-weight:700">’+i.commission+’%</span>’}},
-{k:‘active’,l:‘Estado’,r:function(i){return i.active?’<span class="bdg bg">Activo</span>’:’<span class="bdg bm">Finalizado</span>’}}
-],‘conForm’)}
-
-function renderPayments(){return crudTable(‘payments’,‘Cobranzas’,‘💰’,[
-{k:‘contractId’,l:‘Propiedad’,s:‘font-weight:600’,r:function(i){var c=gC(i.contractId);return esc(gP(c.propertyId).name||’—’)}},
-{k:’_t’,l:‘Inquilino’,r:function(i){var c=gC(i.contractId);return esc(gT(c.tenantId).name||’—’)}},
-{k:‘month’,l:‘Mes’},{k:‘amount’,l:‘Monto’,r:function(i){return fmt(i.amount)}},
-{k:‘paid’,l:‘Estado’,r:function(i){return i.paid?’<span class="bdg bg">✓ Pagado</span>’:’<span class="bdg brr">Pendiente</span>’}},
-{k:‘paidDate’,l:‘Fecha pago’,r:function(i){return i.paidDate||’—’}}
-],‘payForm’)}
-
-function renderComplaints(){return crudTable(‘complaints’,‘Quejas’,‘📢’,[
-{k:‘subject’,l:‘Asunto’,s:‘font-weight:600’},
-{k:‘propertyId’,l:‘Propiedad’,r:function(i){return esc(gP(i.propertyId).name||’—’)}},
-{k:‘tenantId’,l:‘Inquilino’,r:function(i){return esc(gT(i.tenantId).name||’—’)}},
-{k:‘status’,l:‘Estado’,r:function(i){var cls=i.status===‘abierta’?‘brr’:i.status===‘en progreso’?‘by’:‘bg’;return ‘<span class="bdg '+cls+'" style="text-transform:capitalize">’+esc(i.status)+’</span>’}},
-{k:‘date’,l:‘Fecha’}
-],‘queForm’)}
-
-// ===================== MAIN RENDER =====================
-function render(){
-renderNav();
-document.getElementById(‘topDate’).textContent=‘📅 ‘+getToday();
-var h=’’;
-switch(sec){
-case’panel’:h=renderPanel();break;case’dashboard’:h=renderDashboard();break;
-case’properties’:h=renderProperties();break;case’tenants’:h=renderTenants();break;
-case’owners’:h=renderOwners();break;case’contracts’:h=renderContracts();break;
-case’payments’:h=renderPayments();break;case’complaints’:h=renderComplaints();break;
-default:h=renderPanel();
-}
-document.getElementById(‘content’).innerHTML=h;
-}
-
-// ===================== START =====================
-render();
+function R(){RN();document.getElementById(“dt”).textContent=TD();var h=””;switch(sec){case”panel”:h=rPanel();break;case”dashboard”:h=rDash();break;case”properties”:h=rProps();break;case”tenants”:h=rTen();break;case”owners”:h=rOwn();break;case”contracts”:h=rCon();break;case”payments”:h=rPay();break;case”complaints”:h=rQue();break;default:h=rPanel()}document.getElementById(“ct”).innerHTML=h}
+R();
 </script>
 
 </body>
