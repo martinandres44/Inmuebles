@@ -133,17 +133,24 @@ tr:hover td{background:rgba(139,92,246,.04)}
 <div id="modalRoot"></div>
 <script>
 // ===================== FIREBASE =====================
-firebase.initializeApp({
-  apiKey:"AIzaSyCK1Xr3Q8uBmy7cC25QsNg4li7MAuVjMyA",
-  authDomain:"rentacrm-30a57.firebaseapp.com",
-  databaseURL:"https://rentacrm-30a57-default-rtdb.firebaseio.com",
-  projectId:"rentacrm-30a57",
-  storageBucket:"rentacrm-30a57.firebasestorage.app",
-  messagingSenderId:"340949029113",
-  appId:"1:340949029113:web:17bb41f2f9b9aef9e15228"
-});
-const db=firebase.database(),dbRef=db.ref('rentacrm');
+// ===================== FIREBASE =====================
+try {
+  firebase.initializeApp({
+    apiKey:"AIzaSyCK1Xr3Q8uBmy7cC25QsNg4li7MAuVjMyA",
+    authDomain:"rentacrm-30a57.firebaseapp.com",
+    databaseURL:"https://rentacrm-30a57-default-rtdb.firebaseio.com",
+    projectId:"rentacrm-30a57",
+    storageBucket:"rentacrm-30a57.firebasestorage.app",
+    messagingSenderId:"340949029113",
+    appId:"1:340949029113:web:17bb41f2f9b9aef9e15228"
+  });
+  console.log('Firebase initialized OK');
+} catch(e) {
+  console.error('Firebase init error:', e);
+}
 
+const db = firebase.database();
+const dbRef = db.ref(‘rentacrm’);
 const SEED={
 properties:[
 {id:“p1”,name:“Depto 2 amb Centro”,type:“Departamento”,address:“Av. Rivadavia 1234, CABA”,rooms:2,available:false,depositAmount:200000},
@@ -190,19 +197,60 @@ complaints:[
 let D={properties:[],tenants:[],owners:[],contracts:[],payments:[],complaints:[]};
 let sec=‘panel’,ready=false;
 
+let D={properties:[],tenants:[],owners:[],contracts:[],payments:[],complaints:[]};
+let sec=‘panel’,ready=false;
+
 const COLS=[‘properties’,‘tenants’,‘owners’,‘contracts’,‘payments’,‘complaints’];
-dbRef.on(‘value’,snap=>{
-const v=snap.val();
-if(v){D=v;COLS.forEach(k=>{if(!Array.isArray(D[k]))D[k]=D[k]?Object.values(D[k]):[]});}
-if(!ready){ready=true;if(!v||!v.properties){dbRef.set(SEED);D=JSON.parse(JSON.stringify(SEED));}}
-render();syncUI(true);
-},e=>{console.error(e);syncUI(false)});
 
-function save(){dbRef.set(D).catch(e=>{console.error(e);syncUI(false)})}
-function syncUI(ok){const e=document.getElementById(‘syncSt’);if(e){e.className=‘syncs ‘+(ok?‘syn-ok’:‘syn-off’);e.textContent=ok?‘🟢 Sincronizado’:‘🔴 Sin conexión’}}
+// Timeout fallback - if Firebase doesn’t respond in 5s, use seed data
+let fbTimeout = setTimeout(function() {
+if(!ready) {
+console.warn(‘Firebase timeout - loading seed data locally’);
+ready = true;
+D = JSON.parse(JSON.stringify(SEED));
+render();
+syncUI(false);
+}
+}, 5000);
+
+dbRef.on(‘value’, function(snap) {
+clearTimeout(fbTimeout);
+console.log(‘Firebase data received:’, snap.val() ? ‘has data’ : ‘empty’);
+const v = snap.val();
+if(v) {
+D = v;
+COLS.forEach(function(k) {
+if(!Array.isArray(D[k])) D[k] = D[k] ? Object.values(D[k]) : [];
+});
+}
+if(!ready) {
+ready = true;
+if(!v || !v.properties) {
+console.log(‘Seeding Firebase with initial data…’);
+dbRef.set(SEED).then(function() {
+console.log(‘Seed data written OK’);
+}).catch(function(e) {
+console.error(‘Seed write error:’, e);
+});
+D = JSON.parse(JSON.stringify(SEED));
+}
+}
+render();
+syncUI(true);
+}, function(err) {
+console.error(‘Firebase listener error:’, err);
+clearTimeout(fbTimeout);
+if(!ready) {
+ready = true;
+D = JSON.parse(JSON.stringify(SEED));
+render();
+}
+syncUI(false);
+});
+
+function save(){dbRef.set(D).then(function(){syncUI(true)}).catch(function(e){console.error(‘Save error:’,e);syncUI(false)})}
+function syncUI(ok){var e=document.getElementById(‘syncSt’);if(e){e.className=‘syncs ‘+(ok?‘syn-ok’:‘syn-off’);e.textContent=ok?‘🟢 Sincronizado’:‘🔴 Sin conexión (datos locales)’}}
 function resetData(){if(!confirm(’¿Resetear todos los datos?’))return;D=JSON.parse(JSON.stringify(SEED));save()}
-
-// ===================== HELPERS =====================
 function fmt(n){return’$ ‘+Number(n).toLocaleString(‘es-AR’)}
 function uid(){return’id_’+Date.now()+’_’+Math.random().toString(36).slice(2,7)}
 function gP(id){return D.properties.find(p=>p.id===id)||{}}
