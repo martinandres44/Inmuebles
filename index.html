@@ -114,56 +114,75 @@ tr:hover td{background:rgba(139,92,246,.04)}
   <div class="slogo"><div class="ico">🏠</div><span>RentaCRM</span></div>
   <nav id="nav"></nav>
   <div class="sfoot">
-    <div id="syncSt" class="syncs syn-ok">⏳ Cargando...</div>
+    <div id="syncSt" class="syncs syn-ok">🟢 Datos guardados</div>
+    <button class="brst" onclick="exportData()" style="background:var(--ag);color:var(--ac);border-color:rgba(139,92,246,.2);margin-bottom:6px">📤 Exportar datos</button>
+    <button class="brst" onclick="importData()" style="background:var(--gg);color:var(--gn);border-color:rgba(34,197,94,.2);margin-bottom:6px">📥 Importar datos</button>
     <button class="brst" onclick="resetData()">🔄 Resetear datos demo</button>
   </div>
 </aside>
 <main id="main">
   <div class="top"><h2>⚡ Panel Administrativo</h2><div class="topm"><span style="color:var(--gn);font-weight:700">✕ Online</span><span style="color:var(--t3)" id="topDate"></span></div></div>
-  <div id="content"><div class="loading"><div class="spinner"></div><span style="color:var(--ac);font-weight:600">Cargando datos...</span></div></div>
+  <div id="content"></div>
 </main>
 <div id="modalRoot"></div>
 <script>
-// ===================== GITHUB API STORAGE =====================
-const GH_TOKEN = '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';
-const GH_REPO = 'martinandres44/martinandres44.github.io';
-const GH_FILE = 'rentacrm-data.json';
-const GH_API = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
-let fileSha = null;
+// ===================== LOCAL STORAGE =====================
+var STORAGE_KEY = 'rentacrm-data';
 
-async function ghLoad() {
+function loadData() {
 try {
-const r = await fetch(GH_API, { headers: { ‘Authorization’: ’Bearer ’ + GH_TOKEN, ‘Accept’: ‘application/vnd.github+json’ }});
-if (r.status === 404) return null;
-if (!r.ok) throw new Error(’GitHub API ’ + r.status);
-const j = await r.json();
-fileSha = j.sha;
-return JSON.parse(atob(j.content));
-} catch(e) { console.error(‘ghLoad error:’, e); return null; }
+var raw = localStorage.getItem(STORAGE_KEY);
+if (raw) return JSON.parse(raw);
+} catch(e) {}
+return null;
 }
 
-async function ghSave(data) {
-syncUI(‘saving’);
-try {
-const body = { message: ‘RentaCRM update’, content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: fileSha };
-const r = await fetch(GH_API, { method: ‘PUT’, headers: { ‘Authorization’: ’Bearer ’ + GH_TOKEN, ‘Accept’: ‘application/vnd.github+json’, ‘Content-Type’: ‘application/json’ }, body: JSON.stringify(body) });
-if (!r.ok) throw new Error(’Save failed ’ + r.status);
-const j = await r.json();
-fileSha = j.content.sha;
-syncUI(‘ok’);
-} catch(e) { console.error(‘ghSave error:’, e); syncUI(‘off’); }
+function saveData() {
+try { localStorage.setItem(STORAGE_KEY, JSON.stringify(D)); syncUI(‘ok’); }
+catch(e) { syncUI(‘off’); }
 }
 
 function syncUI(s) {
 var e = document.getElementById(‘syncSt’);
 if (!e) return;
-if (s === ‘ok’) { e.className = ‘syncs syn-ok’; e.textContent = ‘🟢 Sincronizado con GitHub’; }
-else if (s === ‘saving’) { e.className = ‘syncs syn-sav’; e.textContent = ‘💾 Guardando…’; }
-else { e.className = ‘syncs syn-off’; e.textContent = ‘🔴 Error de conexión’; }
+if (s === ‘ok’) { e.className = ‘syncs syn-ok’; e.textContent = ‘🟢 Datos guardados’; }
+else { e.className = ‘syncs syn-off’; e.textContent = ‘🔴 Error al guardar’; }
+}
+
+function exportData() {
+var blob = new Blob([JSON.stringify(D, null, 2)], {type: ‘application/json’});
+var a = document.createElement(‘a’);
+a.href = URL.createObjectURL(blob);
+a.download = ‘rentacrm-backup-’ + new Date().toISOString().slice(0,10) + ‘.json’;
+a.click();
+}
+
+function importData() {
+var input = document.createElement(‘input’);
+input.type = ‘file’;
+input.accept = ‘.json’;
+input.onchange = function(e) {
+var file = e.target.files[0];
+if (!file) return;
+var reader = new FileReader();
+reader.onload = function(ev) {
+try {
+var data = JSON.parse(ev.target.result);
+if (data.properties && data.tenants) {
+D = data;
+saveData();
+render();
+alert(’¡Datos importados correctamente!’);
+} else { alert(‘Archivo inválido’); }
+} catch(err) { alert(‘Error al leer el archivo’); }
+};
+reader.readAsText(file);
+};
+input.click();
 }
 
 // ===================== SEED DATA =====================
-const SEED={
+var SEED={
 properties:[
 {id:“p1”,name:“Depto 2 amb Centro”,type:“Departamento”,address:“Av. Rivadavia 1234, CABA”,rooms:2,available:false,depositAmount:200000},
 {id:“p2”,name:“Casa 3 dorm Guadalupe”,type:“Casa”,address:“Calle San Martín 567, Guadalupe”,rooms:3,available:false,depositAmount:400000},
@@ -206,22 +225,15 @@ complaints:[
 {id:“q4”,propertyId:“p3”,tenantId:“t3”,ownerId:“o4”,subject:“Caño roto cocina”,status:“abierta”,date:“2026-01-28”,description:“Pérdida de agua en cocina”}
 ]};
 
-let D = JSON.parse(JSON.stringify(SEED));
-let sec = ‘panel’;
-
 // ===================== INIT =====================
-async function init() {
-var loaded = await ghLoad();
-if (loaded && loaded.properties) { D = loaded; }
-else { D = JSON.parse(JSON.stringify(SEED)); await ghSave(D); }
-syncUI(‘ok’);
-render();
-}
+var loaded = loadData();
+var D = (loaded && loaded.properties) ? loaded : JSON.parse(JSON.stringify(SEED));
+var sec = ‘panel’;
+saveData();
 
-async function save() { await ghSave(D); }
-async function resetData() { if(!confirm(’¿Resetear todos los datos?’))return; D=JSON.parse(JSON.stringify(SEED)); await save(); render(); }
+function save() { saveData(); }
+function resetData() { if(!confirm(’¿Resetear todos los datos?’))return; D=JSON.parse(JSON.stringify(SEED)); save(); render(); }
 
-// ===================== HELPERS =====================
 function fmt(n){return’$ ‘+Number(n).toLocaleString(‘es-AR’)}
 function uid(){return’id_’+Date.now()+’_’+Math.random().toString(36).slice(2,7)}
 function gP(id){return D.properties.find(function(p){return p.id===id})||{}}
@@ -453,7 +465,7 @@ document.getElementById(‘content’).innerHTML=h;
 }
 
 // ===================== START =====================
-init();
+render();
 </script>
 
 </body>
