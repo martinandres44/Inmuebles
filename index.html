@@ -279,7 +279,7 @@ var h=’’;NAV.forEach(function(n){
 if(n.h){h+=’<div class="nhdr">’+n.h+’</div>’;return}
 var b=’’;if(n.k===‘complaints’&&oc>0)b=’<span class="nbdg r">’+oc+’</span>’;
 else if(n.k===‘tenants’&&tc>0)b=’<span class="nbdg p">’+tc+’</span>’;
-h+=’<button class="nit '+(sec===n.k?'on':'')+'" onclick="nav(\''+n.k+'\')"><span class="ni">’+n.i+’</span>’+n.l+b+’</button>’;
+h+=’<button class="nit '+(sec===n.k?'on':'')+'" onclick="nav(&#39;'+n.k+'&#39;)"><span class="ni">’+n.i+’</span>’+n.l+b+’</button>’;
 });document.getElementById(‘nav’).innerHTML=h;
 }
 function nav(s){sec=s;render()}
@@ -292,7 +292,7 @@ return ‘<div class="ff"><label>Nombre</label><input id="f_name" value="'+esc(i
 ‘<div class="ff"><label>Dirección</label><input id="f_addr" value="'+esc(i.address)+'"></div>’+
 ‘<div class="frow"><div class="ff"><label>Depósito ($)</label><input type="number" id="f_dep" value="'+i.depositAmount+'"></div>’+
 ‘<div class="ff"><label>Disponible</label><select id="f_avail"><option value=“true”’+(i.available?’ selected’:’’)+’>Sí</option><option value=“false”’+(!i.available?’ selected’:’’)+’>No (alquilada)</option></select></div></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveProp(\''+(e?i.id:'')+'\')">Guardar</button></div>’;
+‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveProp(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
 }
 function saveProp(id){var o={name:document.getElementById(‘f_name’).value,type:document.getElementById(‘f_type’).value,address:document.getElementById(‘f_addr’).value,rooms:+document.getElementById(‘f_rooms’).value,available:document.getElementById(‘f_avail’).value===‘true’,depositAmount:+document.getElementById(‘f_dep’).value};if(!o.name)return alert(‘Ingresá un nombre’);id?updI(‘properties’,id,o):addI(‘properties’,o)}
 
@@ -301,7 +301,7 @@ var i=item||{name:’’,phone:’’,email:’’,dni:’’},e=!!item;
 return ‘<div class="ff"><label>Nombre completo</label><input id="f_name" value="'+esc(i.name)+'"></div>’+
 ‘<div class="frow"><div class="ff"><label>Teléfono</label><input id="f_phone" value="'+esc(i.phone)+'"></div><div class="ff"><label>DNI</label><input id="f_dni" value="'+esc(i.dni)+'"></div></div>’+
 ‘<div class="ff"><label>Email</label><input id="f_email" value="'+esc(i.email)+'"></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveTen(\''+(e?i.id:'')+'\')">Guardar</button></div>’;
+‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveTen(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
 }
 function saveTen(id){var o={name:document.getElementById(‘f_name’).value,phone:document.getElementById(‘f_phone’).value,email:document.getElementById(‘f_email’).value,dni:document.getElementById(‘f_dni’).value};if(!o.name)return alert(‘Ingresá un nombre’);id?updI(‘tenants’,id,o):addI(‘tenants’,o)}
 
@@ -309,8 +309,8 @@ function ownForm(item){
 var i=item||{name:’’,phone:’’,email:’’,mood:3},e=!!item;
 return ‘<div class="ff"><label>Nombre completo</label><input id="f_name" value="'+esc(i.name)+'"></div>’+
 ‘<div class="frow"><div class="ff"><label>Teléfono</label><input id="f_phone" value="'+esc(i.phone)+'"></div><div class="ff"><label>Email</label><input id="f_email" value="'+esc(i.email)+'"></div></div>’+
-‘<div class="ff"><label>Ánimo (<span id="mVal">’+i.mood+’</span>/5)</label><input type="range" min="1" max="5" value="'+i.mood+'" id="f_mood" oninput="document.getElementById(\'mVal\').textContent=this.value"><div class="rlbl"><span>😡 Muy mal</span><span>😄 Excelente</span></div></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveOwn(\''+(e?i.id:'')+'\')">Guardar</button></div>’;
+‘<div class="ff"><label>Ánimo (<span id="mVal">’+i.mood+’</span>/5)</label><input type="range" min="1" max="5" value="'+i.mood+'" id="f_mood" oninput="document.getElementById(&#39;mVal&#39;).textContent=this.value"><div class="rlbl"><span>😡 Muy mal</span><span>😄 Excelente</span></div></div>’+
+‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveOwn(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
 }
 function saveOwn(id){var o={name:document.getElementById(‘f_name’).value,phone:document.getElementById(‘f_phone’).value,email:document.getElementById(‘f_email’).value,mood:+document.getElementById(‘f_mood’).value};if(!o.name)return alert(‘Ingresá un nombre’);id?updI(‘owners’,id,o):addI(‘owners’,o)}
 
@@ -324,7 +324,7 @@ return ‘<div class="frow"><div class="ff"><label>Propiedad</label><select id="
 ‘<div class="frow"><div class="ff"><label>Propietario</label><select id="f_own">’+oo+’</select></div><div class="ff"><label>Comisión (%)</label><input type="number" id="f_comm" value="'+i.commission+'"></div></div>’+
 ‘<div class="frow"><div class="ff"><label>Alquiler ($)</label><input type="number" id="f_rent" value="'+i.rent+'"></div><div class="ff"><label>Estado</label><select id="f_active"><option value=“true”’+(i.active?’ selected’:’’)+’>Activo</option><option value=“false”’+(!i.active?’ selected’:’’)+’>Finalizado</option></select></div></div>’+
 ‘<div class="frow"><div class="ff"><label>Inicio</label><input type="date" id="f_start" value="'+i.startDate+'"></div><div class="ff"><label>Fin</label><input type="date" id="f_end" value="'+i.endDate+'"></div></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveCon(\''+(e?i.id:'')+'\')">Guardar</button></div>’;
+‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveCon(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
 }
 function saveCon(id){var o={propertyId:document.getElementById(‘f_prop’).value,tenantId:document.getElementById(‘f_ten’).value,ownerId:document.getElementById(‘f_own’).value,rent:+document.getElementById(‘f_rent’).value,commission:+document.getElementById(‘f_comm’).value,startDate:document.getElementById(‘f_start’).value,endDate:document.getElementById(‘f_end’).value,active:document.getElementById(‘f_active’).value===‘true’};if(!o.rent)return alert(‘Ingresá el alquiler’);id?updI(‘contracts’,id,o):addI(‘contracts’,o)}
 
@@ -333,9 +333,9 @@ var ac=D.contracts.filter(function(c){return c.active}),i=item||{contractId:(ac[
 var co=’’;ac.forEach(function(c){co+=’<option value=”’+c.id+’”’+(i.contractId===c.id?’ selected’:’’)+’>’+esc((gP(c.propertyId).name||’’))+’ - ‘+esc((gT(c.tenantId).name||’’))+’</option>’});
 return ‘<div class="ff"><label>Contrato</label><select id="f_con">’+co+’</select></div>’+
 ‘<div class="frow"><div class="ff"><label>Mes</label><input type="month" id="f_month" value="'+i.month+'"></div><div class="ff"><label>Monto ($)</label><input type="number" id="f_amt" value="'+i.amount+'"></div></div>’+
-‘<div class="frow"><div class="ff"><label>Estado</label><select id="f_paid" onchange="document.getElementById(\'pdW\').style.display=this.value===\'true\'?\'block\':\'none\'"><option value=“false”’+(!i.paid?’ selected’:’’)+’>Pendiente</option><option value=“true”’+(i.paid?’ selected’:’’)+’>Pagado</option></select></div>’+
+‘<div class="frow"><div class="ff"><label>Estado</label><select id="f_paid" onchange="document.getElementById('pdW').style.display=this.value==='true'?'block':'none'"><option value=“false”’+(!i.paid?’ selected’:’’)+’>Pendiente</option><option value=“true”’+(i.paid?’ selected’:’’)+’>Pagado</option></select></div>’+
 ‘<div class="ff" id="pdW" style="display:'+(i.paid?'block':'none')+'"><label>Fecha pago</label><input type="date" id="f_pdate" value="'+(i.paidDate||'')+'"></div></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="savePay(\''+(e?i.id:'')+'\')">Guardar</button></div>’;
+‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="savePay(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
 }
 function savePay(id){var paid=document.getElementById(‘f_paid’).value===‘true’;var o={contractId:document.getElementById(‘f_con’).value,month:document.getElementById(‘f_month’).value,amount:+document.getElementById(‘f_amt’).value,paid:paid,paidDate:paid?(document.getElementById(‘f_pdate’).value||new Date().toISOString().split(‘T’)[0]):null};if(!o.month)return alert(‘Seleccioná un mes’);id?updI(‘payments’,id,o):addI(‘payments’,o)}
 
@@ -349,7 +349,7 @@ return ‘<div class="ff"><label>Asunto</label><input id="f_subj" value="'+esc(i
 ‘<div class="frow"><div class="ff"><label>Propiedad</label><select id="f_prop">’+po+’</select></div><div class="ff"><label>Inquilino</label><select id="f_ten">’+to+’</select></div></div>’+
 ‘<div class="frow"><div class="ff"><label>Propietario</label><select id="f_own">’+oo+’</select></div><div class="ff"><label>Estado</label><select id="f_status"><option’+(i.status===‘abierta’?’ selected’:’’)+’>abierta</option><option’+(i.status===‘en progreso’?’ selected’:’’)+’>en progreso</option><option’+(i.status===‘resuelta’?’ selected’:’’)+’>resuelta</option></select></div></div>’+
 ‘<div class="ff"><label>Descripción</label><textarea id="f_desc">’+esc(i.description)+’</textarea></div>’+
-‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveQue(\''+(e?i.id:'')+'\')">Guardar</button></div>’;
+‘<div class="factions"><button class="btn btn2" onclick="closeM()">Cancelar</button><button class="btn btn1" onclick="saveQue(&#39;'+(e?i.id:'')+'&#39;)">Guardar</button></div>’;
 }
 function saveQue(id){var o={propertyId:document.getElementById(‘f_prop’).value,tenantId:document.getElementById(‘f_ten’).value,ownerId:document.getElementById(‘f_own’).value,subject:document.getElementById(‘f_subj’).value,status:document.getElementById(‘f_status’).value,date:new Date().toISOString().split(‘T’)[0],description:document.getElementById(‘f_desc’).value};if(!o.subject)return alert(‘Ingresá un asunto’);id?updI(‘complaints’,id,o):addI(‘complaints’,o)}
 // ===================== RENDERERS =====================
@@ -386,7 +386,7 @@ var s=stats(),now=new Date(),cm=now.getFullYear()+’-’+String(now.getMonth()+
 var pTM=D.payments.filter(function(p){return p.paid&&p.month===cm}).reduce(function(a,p){return a+p.amount},0);
 var pendTM=D.payments.filter(function(p){return!p.paid&&p.month===cm}).reduce(function(a,p){return a+p.amount},0);
 var cr=’’;s.a.forEach(function(c){cr+=’<div class="lr"><div><strong>’+esc(gP(c.propertyId).name||’’)+’</strong> <span style="color:var(--t3)">— ‘+esc(gT(c.tenantId).name||’’)+’</span></div><span style="color:var(--gn);font-weight:700">’+fmt(c.rent)+’</span></div>’});
-var pr=’’;s.up.forEach(function(p){var c=gC(p.contractId);pr+=’<div class="lr"><div><strong>’+esc(gP(c.propertyId).name||’’)+’</strong> <span style="color:var(--t3)">· ‘+p.month+’</span></div><div style="display:flex;align-items:center;gap:10px"><span style="color:var(--rd);font-weight:700">’+fmt(p.amount)+’</span><button class="btnco" onclick="markP(\''+p.id+'\')">Cobrar</button></div></div>’});
+var pr=’’;s.up.forEach(function(p){var c=gC(p.contractId);pr+=’<div class="lr"><div><strong>’+esc(gP(c.propertyId).name||’’)+’</strong> <span style="color:var(--t3)">· ‘+p.month+’</span></div><div style="display:flex;align-items:center;gap:10px"><span style="color:var(--rd);font-weight:700">’+fmt(p.amount)+’</span><button class="btnco" onclick="markP(&#39;'+p.id+'&#39;)">Cobrar</button></div></div>’});
 return ‘<div class="sh"><h3>📊 Dashboard General</h3></div><div class="dg">’+
 ‘<div class="dc"><div class="di">🏠</div><div class="dl">Alquileres mensuales</div><div class="dv" style="color:var(--gn)">’+fmt(s.tr)+’</div></div>’+
 ‘<div class="dc"><div class="di">💼</div><div class="dl">Comisiones mensuales</div><div class="dv" style="color:var(--ac)">’+fmt(s.mc)+’</div></div>’+
@@ -399,15 +399,15 @@ return ‘<div class="sh"><h3>📊 Dashboard General</h3></div><div class="dg">�
 function crudTable(col,title,icon,cols,formFn){
 var rows=’’;D[col].forEach(function(item){
 var cells=’’;cols.forEach(function(c){var v=c.r?c.r(item):esc(String(item[c.k]||’’));cells+=’<td’+(c.s?’ style=”’+c.s+’”’:’’)+’>’+v+’</td>’});
-cells+=’<td style="text-align:center"><button class="bti" onclick="editItem(\''+col+'\',\''+item.id+'\',\''+formFn+'\')" title="Editar">✏️</button><button class="bti" onclick="delI(\''+col+'\',\''+item.id+'\')" title="Eliminar">🗑️</button></td>’;
+cells+=’<td style="text-align:center"><button class="bti" onclick="editItem(&#39;'+col+'&#39;,&#39;'+item.id+'&#39;,&#39;'+formFn+'&#39;)" title="Editar">✏️</button><button class="bti" onclick="delI(&#39;'+col+'&#39;,&#39;'+item.id+'&#39;)" title="Eliminar">🗑️</button></td>’;
 rows+=’<tr>’+cells+’</tr>’;
 });
 var ths=’’;cols.forEach(function(c){ths+=’<th>’+c.l+’</th>’});ths+=’<th style="text-align:center">Acciones</th>’;
-return ‘<div class="sh"><h3>’+icon+’ ‘+title+’</h3><button class="btn btn1" onclick="openM(\'Nuevo\','+formFn+'())">+ Agregar</button></div>’+
+return ‘<div class="sh"><h3>’+icon+’ ‘+title+’</h3><button class="btn btn1" onclick="openM(&#39;Nuevo&#39;,'+formFn+'())">+ Agregar</button></div>’+
 ‘<div class="card"><table><thead><tr>’+ths+’</tr></thead><tbody>’+(rows||’<tr><td colspan="'+(cols.length+1)+'" class="empty">No hay registros. ¡Agregá uno!</td></tr>’)+’</tbody></table></div>’;
 }
 
-function editItem(col,id,formFn){var item=D[col].find(function(x){return x.id===id});if(item)openM(‘Editar’,window[formFn](item))}
+function editItem(col,id,formFn){var item=D[col].find(function(x){return x.id===id});if(item)openM('Editar',window[formFn](item))}
 
 function renderProperties(){return crudTable(‘properties’,‘Propiedades’,‘🏠’,[
 {k:‘name’,l:‘Nombre’,s:‘font-weight:600’},{k:‘type’,l:‘Tipo’},{k:‘address’,l:‘Dirección’},{k:‘rooms’,l:‘Amb.’},
